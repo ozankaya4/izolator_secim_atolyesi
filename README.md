@@ -2,6 +2,8 @@
 
 Türkçe, yerelde çalışan izolatör yerleşimi ve titreşim/şok ön kontrol uygulaması. Sayısal hesapların tamamı Python/NumPy/SciPy çekirdeğindedir. React arayüzünde ikinci bir fizik motoru yoktur.
 
+Canlı uygulama: **[ozankaya.net/izolator](https://ozankaya.net/izolator/)**. [Oracle yayın kaydı ve işletim bilgileri](deploy/DEPLOYMENT.md).
+
 ## Docker ile çalıştırma
 
 Docker Desktop/Engine açıkken proje klasöründe:

@@ -37,7 +37,7 @@ sudo certbot certonly --webroot -w /var/www/ozankaya-acme \
 
 Sunucunun önceden kayıtlı ACME hesabı kullanılır; mevcut hesap/iletişim tercihleri değiştirilmez.
 
-Sertifika alındıktan sonra yalnız bu alan adına `nginx-https.conf` uygulanır. Her değişiklikte önce `sudo nginx -t`, sonra `sudo systemctl reload nginx` kullanılır. Nginx yeniden başlatılmaz; mevcut bağlantılar korunur. Certbot için alan adına özel deploy hook, başarılı yenilemeden sonra doğrulanmış Nginx reload yapar. Mevcut alan adlarının sertifika ve renewal dosyaları değiştirilmez.
+Sertifika alındıktan sonra yalnız bu alan adına `nginx-https.conf` uygulanır. Her değişiklikte önce `sudo nginx -t`, sonra `sudo systemctl reload nginx` kullanılır. Nginx yeniden başlatılmaz; mevcut bağlantılar korunur. `renewal-hook.sh`, `/etc/letsencrypt/renewal-hooks/deploy/50-izolator-nginx` konumuna 755 izniyle kurulur; yalnız `ozankaya.net` sertifikası başarıyla yenilendiğinde doğrulanmış Nginx reload yapar. Mevcut alan adlarının sertifika ve renewal dosyaları değiştirilmez.
 
 ## Doğrulama
 
@@ -56,6 +56,6 @@ curl -fsS https://ozankaya.net/izolator/api/health
 BASE_URL=https://ozankaya.net/izolator/ pnpm --dir frontend test:e2e
 ```
 
-Yayın öncesi/sonrası `halisahadefteri.site` ve `rananermin.com` HTTP durumları, Nginx yapılandırma hash'leri, eski konteyner kimlikleri ve servis başlangıçları karşılaştırılır. İlk kurulumun sonuçları `DEPLOYMENT.md` dosyasına kaydedilir.
+Yayın öncesi/sonrası mevcut sitelerin HTTP durumları, Nginx yapılandırma hash'leri, eski konteyner kimlikleri ve servis başlangıçları karşılaştırılır. İlk kurulumun sonuçları `DEPLOYMENT.md` dosyasına kaydedilir.
 
-Resmî referanslar: [Vite public base path](https://vite.dev/guide/build#public-base-path), [Nginx proxy URI eşlemesi](https://nginx.org/en/docs/http/ngx_http_proxy_module.html#proxy_pass).
+Resmî referanslar: [Vite public base path](https://vite.dev/guide/build#public-base-path), [Nginx proxy URI eşlemesi](https://nginx.org/en/docs/http/ngx_http_proxy_module.html#proxy_pass), [Certbot webroot ve yenileme](https://eff-certbot.readthedocs.io/en/stable/using.html).
