@@ -2,7 +2,7 @@
 
 23 Ekim 2026 tarihinde `https://ozankaya.net/izolator/` adresine kuruldu.
 
-## Etkin sürüm
+## İlk manuel sürüm
 
 - Kaynak: `5fb65f4e461e32fce2fe6925c62a3135d86270e7`.
 - Sürüm etiketi: `20261023-5fb65f4`.
@@ -12,7 +12,7 @@
 - Web: yalnız `127.0.0.1:18180`; API yalnız Compose ağı içinde.
 - Namecheap: `@ A 89.168.93.55`, TTL Automatic. Eski kök URL yönlendirmesi bu A kaydına dönüştürüldü. Diğer DNS ve e-posta kayıtları korundu.
 
-Bu belge ve yenileme hook kaynağı sonradan eklendi; çalışan uygulama yukarıdaki sabit commit'ten derlendi. Yenileme hook'u ayrıca sunucuya kuruldu.
+Bu ilk kurulumun tarihsel kaydıdır. Güncel yayın commit'i `https://ozankaya.net/izolator/release.json` adresinden okunur. Otomatik yayın ve geri alma [CICD.md](CICD.md) dosyasında açıklanır. Yenileme hook'u ayrıca sunucuya kuruldu.
 
 ## HTTPS
 

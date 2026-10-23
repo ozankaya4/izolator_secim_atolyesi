@@ -2,7 +2,10 @@ import importlib.util
 import json
 from pathlib import Path
 import tempfile
+import threading
 import unittest
+from http.server import BaseHTTPRequestHandler, HTTPServer
+from urllib.parse import urlsplit
 
 spec = importlib.util.spec_from_file_location('gateway', Path(__file__).parents[1] / 'gateway.py')
 gateway = importlib.util.module_from_spec(spec)
@@ -128,6 +131,49 @@ class DeploymentTests(unittest.TestCase):
         (outside / 'release.env').write_text('ISOLATOR_RELEASE=another-project')
         with self.assertRaises(gateway.DeploymentError):
             self.deployer._release(outside)
+
+    def test_smoke_accepts_binary_catalog_images_over_http(self):
+        # Exercise the actual curl/UTF-8 boundary, not a mocked health-check result.
+        responses = {
+            '/izolator/api/health': (200, b'{"status":"ok"}'),
+            '/izolator/release.json': (200, json.dumps({'commit': OLD}).encode()),
+            '/izolator/': (200, b'<script src="/izolator/assets/app.js"></script>'),
+            '/izolator/assets/app.js': (200, b'console.log("ready");'),
+            '/izolator/catalog-images/AM-004.png': (200, b'\x89PNG\r\n\x1a\n'),
+            '/izolator': (308, b''),
+        }
+
+        class Handler(BaseHTTPRequestHandler):
+            def do_GET(self):
+                status, body = responses.get(self.path, (404, b'Not found'))
+                self.send_response(status)
+                self.end_headers()
+                self.wfile.write(body)
+
+            def log_message(self, *_args):
+                pass
+
+        server = HTTPServer(('127.0.0.1', 0), Handler)
+        thread = threading.Thread(target=server.serve_forever, daemon=True)
+        thread.start()
+        self.addCleanup(server.server_close)
+        self.addCleanup(server.shutdown)
+        port = server.server_port
+
+        class LocalProbe(gateway.Deployer):
+            def _run(self, *args, **kwargs):
+                arguments = list(args)
+                arguments[-1] = f'http://127.0.0.1:{port}' + urlsplit(arguments[-1]).path
+                return super()._run(*arguments, **kwargs)
+
+        public = self.previous / 'frontend/public'
+        public.mkdir(parents=True)
+        (public / 'release.json').write_text(json.dumps({'commit': OLD}))
+        probe = LocalProbe(self.root)
+        probe._smoke(self.previous)
+        responses['/izolator/catalog-images/AM-004.png'] = (404, b'Not found')
+        with self.assertRaisesRegex(gateway.DeploymentError, 'Catalog image'):
+            probe._smoke(self.previous)
 
 
 if __name__ == '__main__':

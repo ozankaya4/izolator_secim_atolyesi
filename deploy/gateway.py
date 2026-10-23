@@ -130,7 +130,8 @@ class Deployer:
         if not asset:
             raise DeploymentError('Frontend asset does not use /izolator/.')
         self._get(asset[1])
-        self._get('/izolator/catalog-images/AM-004.png')
+        if self._get('/izolator/catalog-images/AM-004.png', status=True) != '200':
+            raise DeploymentError('Catalog image is unavailable.')
         if self._get('/', status=True) != '404' or self._get('/izolator', status=True) != '308':
             raise DeploymentError('Host routing changed unexpectedly.')
 

@@ -52,11 +52,12 @@ jobs:
       DEPLOY_PORT: ${{ vars.ISOLATOR_DEPLOY_PORT }}
       DEPLOY_USER: ${{ vars.ISOLATOR_DEPLOY_USER }}
       DEPLOY_KNOWN_HOSTS: ${{ vars.ISOLATOR_KNOWN_HOSTS }}
-      DEPLOY_SSH_KEY: ${{ secrets.ISOLATOR_DEPLOY_KEY }}
     steps:
       - uses: actions/checkout@v4
       - name: Deploy verified commit
         id: ship
+        env:
+          DEPLOY_SSH_KEY: ${{ secrets.ISOLATOR_DEPLOY_KEY }}
         run: bash deploy/ci-deploy.sh deploy
       - name: Verify public HTTPS release
         if: steps.ship.outputs.deployed == 'true'
@@ -73,6 +74,8 @@ jobs:
           PY
       - name: Roll back if public verification fails
         if: failure() && steps.ship.outputs.deployed == 'true'
+        env:
+          DEPLOY_SSH_KEY: ${{ secrets.ISOLATOR_DEPLOY_KEY }}
         run: bash deploy/ci-deploy.sh rollback
       - name: Deployment summary
         if: success() && steps.ship.outputs.deployed == 'true'
