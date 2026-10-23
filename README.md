@@ -4,6 +4,8 @@ Türkçe, yerelde çalışan izolatör yerleşimi ve titreşim/şok ön kontrol 
 
 Canlı uygulama: **[ozankaya.net/izolator](https://ozankaya.net/izolator/)**. [Oracle yayın kaydı ve işletim bilgileri](deploy/DEPLOYMENT.md).
 
+`main` dalına push → CI testleri → Oracle'a otomatik yayın. [CI/CD ve geri alma](deploy/CICD.md).
+
 ## Docker ile çalıştırma
 
 Docker Desktop/Engine açıkken proje klasöründe:

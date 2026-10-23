@@ -1,10 +1,16 @@
 name: verify
-on: [push, pull_request]
+on: [push, pull_request, workflow_dispatch]
+permissions:
+  contents: read
 jobs:
   verify:
     runs-on: ubuntu-latest
+    concurrency:
+      group: verify-${{ github.ref }}
+      cancel-in-progress: true
     steps:
       - uses: actions/checkout@v4
+      - run: python3 -m unittest discover -s deploy/tests -v
       - uses: actions/setup-node@v4
         with:
           node-version: '24.22.1'
@@ -27,3 +33,48 @@ jobs:
       - run: BASE_URL=http://127.0.0.1:18181/izolator/ pnpm --dir frontend test:e2e
       - if: always()
         run: docker compose -p izolator-subpath-ci -f deploy/compose.yaml -f deploy/compose.test.yaml down
+  deploy:
+    needs: verify
+    if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request'
+    runs-on: ubuntu-latest
+    timeout-minutes: 40
+    environment:
+      name: production
+      url: https://ozankaya.net/izolator/
+    permissions:
+      contents: read
+      deployments: write
+    concurrency:
+      group: izolator-production
+      cancel-in-progress: false
+    env:
+      DEPLOY_HOST: ${{ vars.ISOLATOR_DEPLOY_HOST }}
+      DEPLOY_PORT: ${{ vars.ISOLATOR_DEPLOY_PORT }}
+      DEPLOY_USER: ${{ vars.ISOLATOR_DEPLOY_USER }}
+      DEPLOY_KNOWN_HOSTS: ${{ vars.ISOLATOR_KNOWN_HOSTS }}
+      DEPLOY_SSH_KEY: ${{ secrets.ISOLATOR_DEPLOY_KEY }}
+    steps:
+      - uses: actions/checkout@v4
+      - name: Deploy verified commit
+        id: ship
+        run: bash deploy/ci-deploy.sh deploy
+      - name: Verify public HTTPS release
+        if: steps.ship.outputs.deployed == 'true'
+        run: |
+          python3 - <<'PY'
+          import json, os, urllib.request
+          base = 'https://ozankaya.net/izolator/'
+          def get(path):
+              with urllib.request.urlopen(base + path, timeout=30) as response:
+                  return json.load(response)
+          assert get('api/health')['status'] == 'ok'
+          assert get('release.json')['commit'] == os.environ['GITHUB_SHA']
+          print('Public HTTPS health and deployed commit verified.')
+          PY
+      - name: Roll back if public verification fails
+        if: failure() && steps.ship.outputs.deployed == 'true'
+        run: bash deploy/ci-deploy.sh rollback
+      - name: Deployment summary
+        if: success() && steps.ship.outputs.deployed == 'true'
+        run: |
+          printf '### Production\n\nCommit: `%s`\n\nhttps://ozankaya.net/izolator/\n' "$GITHUB_SHA" >> "$GITHUB_STEP_SUMMARY"

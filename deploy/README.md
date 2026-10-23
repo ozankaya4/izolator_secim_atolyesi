@@ -2,6 +2,8 @@
 
 Üretim adresi `https://ozankaya.net/izolator/` olur. `/izolator` sonuna `/` eklenerek yönlendirilir. Alan adının kökü uygulamayı sunmaz.
 
+`main` push'larında testlerden sonra otomatik yayın etkindir. Güncel akış, sınırlar ve geri alma komutları [CICD.md](CICD.md) içindedir. Aşağıdaki derleme komutları ilk manuel kurulum içindir; otomatik yayın `/etc/izolator/compose.yaml` dosyasını kullanır.
+
 ## Yol ve servis ayrımı
 
 Vite `/izolator/` tabanıyla derlenir. API ve katalog görselleri `import.meta.env.BASE_URL` kullanır. Host Nginx yalnız yeni `ozankaya.net` sanal sunucusunu yönetir; `/izolator/` önekini kaldırıp `127.0.0.1:18180` portuna iletir. İç web konteyneri `/api/` çağrılarını API'ye geçirir. Böylece alan adının `/api` veya `/assets` yolları uygulama tarafından işgal edilmez.
