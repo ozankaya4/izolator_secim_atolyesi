@@ -18,6 +18,8 @@ Bu belge ve yenileme hook kaynağı sonradan eklendi; çalışan uygulama yukar�
 
 Let's Encrypt sertifikası `ozankaya.net` için mevcut ACME hesabıyla alındı. İlk sertifikanın bitişi **21 Ocak 2027 20:40 UTC**. `certbot.timer` etkin. `/etc/letsencrypt/renewal-hooks/deploy/50-izolator-nginx`, yalnız bu sertifika yenilendiğinde `nginx -t` ve kesintisiz reload çalıştırır. Hook doğrudan çalıştırılarak doğrulandı.
 
+`certbot renew --cert-name ozankaya.net --dry-run --no-directory-hooks --non-interactive` başarılı oldu. Deneme yalnız bu sertifikayı hedefledi; diğer alan adlarının yenileme hook'ları çalıştırılmadı.
+
 ## Doğrulama
 
 - İki üretim konteyneri de healthy; API/web bellek ve CPU sınırları etkin.
