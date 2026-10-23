@@ -23,3 +23,7 @@ jobs:
       - run: pnpm --dir frontend exec playwright install --with-deps chromium
       - run: pnpm --dir frontend test:e2e
       - run: docker compose build
+      - run: docker compose -p izolator-subpath-ci -f deploy/compose.yaml -f deploy/compose.test.yaml up --build -d --wait
+      - run: BASE_URL=http://127.0.0.1:18181/izolator/ pnpm --dir frontend test:e2e
+      - if: always()
+        run: docker compose -p izolator-subpath-ci -f deploy/compose.yaml -f deploy/compose.test.yaml down

@@ -155,7 +155,7 @@ export function LayoutPanel({
         <div className="product-summary">
           <div className="product-picture">
             <img
-              src={'/catalog-images/' + product.photo.split('/').at(-1)}
+              src={import.meta.env.BASE_URL + 'catalog-images/' + product.photo.split('/').at(-1)}
               alt={`${product.series} üretici aile görseli`}
               onError={(e) => {
                 e.currentTarget.style.display = 'none';

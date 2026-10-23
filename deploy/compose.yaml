@@ -1,0 +1,53 @@
+name: izolator-prod
+services:
+  api:
+    image: izolator-api:${ISOLATOR_RELEASE:-local}
+    build:
+      context: ..
+      dockerfile: backend/Dockerfile
+    init: true
+    restart: unless-stopped
+    cpus: 1.0
+    mem_limit: 1536m
+    pids_limit: 128
+    environment:
+      OPENBLAS_NUM_THREADS: "1"
+      OMP_NUM_THREADS: "1"
+    logging:
+      driver: json-file
+      options:
+        max-size: "10m"
+        max-file: "3"
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8000/api/health', timeout=3)"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
+  web:
+    image: izolator-web:${ISOLATOR_RELEASE:-local}
+    build:
+      context: ..
+      dockerfile: frontend/Dockerfile
+      args:
+        VITE_BASE_PATH: /izolator/
+    init: true
+    restart: unless-stopped
+    cpus: 0.25
+    mem_limit: 128m
+    pids_limit: 64
+    ports:
+      - "127.0.0.1:${ISOLATOR_PORT:-18180}:8080"
+    depends_on:
+      api:
+        condition: service_healthy
+    logging:
+      driver: json-file
+      options:
+        max-size: "10m"
+        max-file: "3"
+    healthcheck:
+      test: ["CMD", "wget", "-q", "--spider", "http://127.0.0.1:8080/"]
+      interval: 10s
+      timeout: 5s
+      retries: 5

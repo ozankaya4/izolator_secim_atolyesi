@@ -1,6 +1,6 @@
 import { test, expect } from '@playwright/test';
 test.beforeEach(async ({ page }) => {
-  await page.goto('/');
+  await page.goto('./');
   await expect(page.getByRole('heading', { name: 'Sistemi tanımlayın' })).toBeVisible();
 });
 test('hesap, güncellik, snapshot raporu ve taslak kurtarma', async ({ page }) => {

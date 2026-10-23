@@ -4,6 +4,8 @@ RUN npm install --global pnpm@11.25.0
 COPY frontend/package.json frontend/pnpm-lock.yaml ./
 RUN pnpm install --frozen-lockfile
 COPY frontend/ ./
+ARG VITE_BASE_PATH=/
+ENV VITE_BASE_PATH=${VITE_BASE_PATH}
 RUN pnpm build
 FROM nginx:1.30.6-alpine
 COPY infra/nginx.conf /etc/nginx/conf.d/default.conf

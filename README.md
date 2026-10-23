@@ -113,3 +113,5 @@ Girdi JSON'unda `isolation-project-v5` kullanılır. `isolation-layout-v1/v2/v3/
 Başlangıç envanteri: [IMPLEMENTATION.md](docs/IMPLEMENTATION.md). Bağımlılık kararları ve resmî kaynaklar: [DEPENDENCIES.md](docs/DEPENDENCIES.md).
 
 Örnek A4 çıktı: [test senaryosu raporu](output/pdf/ornek-rapor.pdf) (40 kg, 20 g / 11 ms yarım sinüs, %10 kompanzasyon).
+
+Oracle üzerinde `ozankaya.net/izolator` yayını ve geri alma adımları: [sunucu kurulum notları](deploy/README.md).
