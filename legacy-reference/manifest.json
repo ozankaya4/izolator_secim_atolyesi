@@ -1,0 +1,78 @@
+{
+  "retrieved_at": "2026-10-23",
+  "reference_url": "https://izolator-secim-atolyesi.ochrebook17.chatgpt.site/",
+  "sources": [
+    {
+      "file": "catalog.js",
+      "url": "https://izolator-secim-atolyesi.ochrebook17.chatgpt.site/catalog.js?v=06e9eaf7c58c",
+      "sha256": "06e9eaf7c58c8a35ef00edcf4638d4de12ef0964a7e4f92193d36f7020c4d2d3",
+      "bytes": 87503
+    },
+    {
+      "file": "core.js",
+      "url": "https://izolator-secim-atolyesi.ochrebook17.chatgpt.site/core.js?v=88a247c9fe88",
+      "sha256": "88a247c9fe88351ecc5fe8802fd831b0dbc234e91bd776597569979d75225f13",
+      "bytes": 3819
+    },
+    {
+      "file": "scene.js",
+      "url": "https://izolator-secim-atolyesi.ochrebook17.chatgpt.site/scene.js?v=cac101a7fd10",
+      "sha256": "cac101a7fd109b147837f2a66b1a91011dad274710627f59ee055a4a2ee00506",
+      "bytes": 4094
+    },
+    {
+      "file": "app.js",
+      "url": "https://izolator-secim-atolyesi.ochrebook17.chatgpt.site/app.js?v=c1055748e2d2",
+      "sha256": "c1055748e2d23cb2cda55709071aa522dc5ae724336c2e4c096eb61074a443f0",
+      "bytes": 26790
+    },
+    {
+      "file": "structure.js",
+      "url": "https://izolator-secim-atolyesi.ochrebook17.chatgpt.site/structure.js?v=3f42addb96b6",
+      "sha256": "3f42addb96b6b80ca8a0e6a2530f3cf79897c71a8bd7c6b461860db1e0df4ddd",
+      "bytes": 19955
+    },
+    {
+      "file": "coupled.js",
+      "url": "https://izolator-secim-atolyesi.ochrebook17.chatgpt.site/coupled.js?v=4368f87ce4d5",
+      "sha256": "4368f87ce4d5710bc4872ad050941fbd38a0d6651d1a3b1366b84629a997f5c3",
+      "bytes": 8565
+    },
+    {
+      "file": "nonlinear.js",
+      "url": "https://izolator-secim-atolyesi.ochrebook17.chatgpt.site/nonlinear.js?v=720c75776550",
+      "sha256": "720c75776550ce0ea1a647accfdf55a40f5b107b8ab0a52c98aae3f6079907e6",
+      "bytes": 14063
+    },
+    {
+      "file": "milshock.js",
+      "url": "https://izolator-secim-atolyesi.ochrebook17.chatgpt.site/milshock.js?v=ad06e5573dbe",
+      "sha256": "ad06e5573dbe44fb1fd5a552b288778c67cfc99110a4b460b52b3a40e04590df",
+      "bytes": 4889
+    },
+    {
+      "file": "timechart.js",
+      "url": "https://izolator-secim-atolyesi.ochrebook17.chatgpt.site/timechart.js?v=eec3cccb1ad9",
+      "sha256": "eec3cccb1ad99faef78fd8837f85975c7d088abaf0213ec156c83ebab84af9d0",
+      "bytes": 5763
+    },
+    {
+      "file": "worker-source.js",
+      "url": "https://izolator-secim-atolyesi.ochrebook17.chatgpt.site/worker-source.js?v=f433660b59fb",
+      "sha256": "f433660b59fb766a1f37a31eaf4d60db6ce4d6ee023a9eb9473b25af88bbabbb",
+      "bytes": 183341
+    },
+    {
+      "file": "performance.js",
+      "url": "https://izolator-secim-atolyesi.ochrebook17.chatgpt.site/performance.js?v=9b46100c355f",
+      "sha256": "9b46100c355f96b6a69c522e7e495e4589080bed666d2f7fc87e2fedc251f4b2",
+      "bytes": 9142
+    },
+    {
+      "file": "cursor.js",
+      "url": "https://izolator-secim-atolyesi.ochrebook17.chatgpt.site/cursor.js?v=244d15861905",
+      "sha256": "244d1586190503e4458a2c4a9d4e682c6926639a0994c02178441e3235972d44",
+      "bytes": 6624
+    }
+  ]
+}

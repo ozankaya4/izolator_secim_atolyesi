@@ -1,0 +1,44 @@
+[
+  {
+    "scenario": "rigid",
+    "legacy_ms_median": 274.73808399999996,
+    "python_ms_median": 269.9569169199094,
+    "max_relative_error": {
+      "modes": 3.8724251451850543e-16,
+      "harmonic": 2.2560980010754226e-13,
+      "psd": 8.667506143657288e-07,
+      "shock": 2.6584398431949434e-06,
+      "shock_local": 3.121014804024096e-06
+    },
+    "legacy_steps": 22520,
+    "python_steps": 591
+  },
+  {
+    "scenario": "flexible-compensated",
+    "legacy_ms_median": 529.8165,
+    "python_ms_median": 2092.045458033681,
+    "max_relative_error": {
+      "modes": 4.748941685243854e-16,
+      "harmonic": 2.314938684304374e-13,
+      "psd": 1.0459880927953557e-06,
+      "shock": 1.383455041170453e-06,
+      "shock_local": 7.967383897015729e-07
+    },
+    "legacy_steps": 24120,
+    "python_steps": 5482
+  },
+  {
+    "scenario": "socitec-directional",
+    "legacy_ms_median": 3155.058625,
+    "python_ms_median": 2985.274499980733,
+    "max_relative_error": {
+      "modes": 6.464122996949234e-16,
+      "harmonic": 1.169351236451743e-12,
+      "psd": 1.8940682625822122e-06,
+      "shock": 4.6808624863968754e-07,
+      "shock_local": 1.6821934837980843e-06
+    },
+    "legacy_steps": 75304,
+    "python_steps": 2788
+  }
+]

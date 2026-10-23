@@ -1,0 +1,1937 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "İzolatör Seçim Atölyesi",
+    "version": "1.0.0"
+  },
+  "paths": {
+    "/api/health": {
+      "get": {
+        "summary": "Health",
+        "operationId": "health_api_health_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": {
+                    "type": "string"
+                  },
+                  "type": "object",
+                  "title": "Response Health Api Health Get"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/catalog": {
+      "get": {
+        "summary": "Get Catalog",
+        "operationId": "get_catalog_api_catalog_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Catalog"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/projects/default": {
+      "get": {
+        "summary": "Default Project",
+        "operationId": "default_project_api_projects_default_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Project"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/projects/validate": {
+      "post": {
+        "summary": "Validate Project",
+        "operationId": "validate_project_api_projects_validate_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Project"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Project"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/projects/migrate": {
+      "post": {
+        "summary": "Migrate Project",
+        "operationId": "migrate_project_api_projects_migrate_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "additionalProperties": true,
+                "type": "object",
+                "title": "Data"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MigrationResult"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/catalog/apply": {
+      "post": {
+        "summary": "Apply",
+        "operationId": "apply_api_catalog_apply_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ApplyRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Project"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/jobs": {
+      "post": {
+        "summary": "Start Job",
+        "operationId": "start_job_api_jobs_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Project"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "202": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/JobRead"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/jobs/{job_id}": {
+      "get": {
+        "summary": "Get Job",
+        "operationId": "get_job_api_jobs__job_id__get",
+        "parameters": [
+          {
+            "name": "job_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Job Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/JobRead"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/jobs/{job_id}/cancel": {
+      "post": {
+        "summary": "Cancel Job",
+        "operationId": "cancel_job_api_jobs__job_id__cancel_post",
+        "parameters": [
+          {
+            "name": "job_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Job Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/JobRead"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "AnalysisResult": {
+        "properties": {
+          "snapshot_id": {
+            "type": "string",
+            "title": "Snapshot Id"
+          },
+          "snapshot": {
+            "$ref": "#/components/schemas/Project"
+          },
+          "created_at": {
+            "type": "string",
+            "title": "Created At"
+          },
+          "solver_version": {
+            "type": "string",
+            "title": "Solver Version"
+          },
+          "catalog_revision": {
+            "type": "string",
+            "title": "Catalog Revision"
+          },
+          "catalog_sha256": {
+            "type": "string",
+            "title": "Catalog Sha256"
+          },
+          "catalog_products": {
+            "items": {
+              "$ref": "#/components/schemas/Product"
+            },
+            "type": "array",
+            "title": "Catalog Products"
+          },
+          "duration_seconds": {
+            "type": "number",
+            "title": "Duration Seconds"
+          },
+          "modes": {
+            "items": {
+              "$ref": "#/components/schemas/Mode"
+            },
+            "type": "array",
+            "title": "Modes"
+          },
+          "static": {
+            "$ref": "#/components/schemas/StaticResult"
+          },
+          "harmonic": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/HarmonicResult"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "psd": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/PSDResult"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "shock": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/ShockResult"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "checks": {
+            "items": {
+              "$ref": "#/components/schemas/Check"
+            },
+            "type": "array",
+            "title": "Checks"
+          },
+          "overall": {
+            "type": "string",
+            "enum": [
+              "within",
+              "exceeded",
+              "verify",
+              "failed",
+              "not_run"
+            ],
+            "title": "Overall"
+          },
+          "warnings": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Warnings"
+          },
+          "assumptions": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Assumptions"
+          },
+          "condition_number": {
+            "type": "number",
+            "title": "Condition Number"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "snapshot_id",
+          "snapshot",
+          "created_at",
+          "solver_version",
+          "catalog_revision",
+          "catalog_sha256",
+          "catalog_products",
+          "duration_seconds",
+          "modes",
+          "static",
+          "checks",
+          "overall",
+          "warnings",
+          "assumptions",
+          "condition_number"
+        ],
+        "title": "AnalysisResult"
+      },
+      "ApplyRequest": {
+        "properties": {
+          "project": {
+            "$ref": "#/components/schemas/Project"
+          },
+          "product_id": {
+            "type": "string",
+            "title": "Product Id"
+          },
+          "mount_ids": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Mount Ids"
+          },
+          "estimate_accepted": {
+            "type": "boolean",
+            "title": "Estimate Accepted",
+            "default": false
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "project",
+          "product_id",
+          "mount_ids"
+        ],
+        "title": "ApplyRequest"
+      },
+      "Catalog": {
+        "properties": {
+          "schema_version": {
+            "type": "string",
+            "title": "Schema Version"
+          },
+          "revision": {
+            "type": "string",
+            "title": "Revision"
+          },
+          "units": {
+            "additionalProperties": {
+              "type": "string"
+            },
+            "type": "object",
+            "title": "Units"
+          },
+          "provenance": {
+            "type": "string",
+            "title": "Provenance"
+          },
+          "products": {
+            "items": {
+              "$ref": "#/components/schemas/Product"
+            },
+            "type": "array",
+            "title": "Products"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "schema_version",
+          "revision",
+          "units",
+          "provenance",
+          "products"
+        ],
+        "title": "Catalog"
+      },
+      "Check": {
+        "properties": {
+          "id": {
+            "type": "string",
+            "title": "Id"
+          },
+          "group": {
+            "type": "string",
+            "enum": [
+              "static",
+              "harmonic",
+              "psd",
+              "shock"
+            ],
+            "title": "Group"
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "within",
+              "exceeded",
+              "verify",
+              "failed",
+              "not_run"
+            ],
+            "title": "Status"
+          },
+          "title": {
+            "type": "string",
+            "title": "Title"
+          },
+          "measured": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Measured"
+          },
+          "limit": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Limit"
+          },
+          "unit": {
+            "type": "string",
+            "title": "Unit",
+            "default": ""
+          },
+          "mount_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Mount Id"
+          },
+          "axis": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Axis"
+          },
+          "detail": {
+            "type": "string",
+            "title": "Detail",
+            "default": ""
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "id",
+          "group",
+          "status",
+          "title"
+        ],
+        "title": "Check"
+      },
+      "DirectionData": {
+        "properties": {
+          "F": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "F"
+          },
+          "d": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "D"
+          },
+          "shockF": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Shockf"
+          },
+          "shockD": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Shockd"
+          },
+          "doubleAmplitude": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Doubleamplitude"
+          },
+          "fn": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Fn"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "title": "DirectionData"
+      },
+      "HTTPValidationError": {
+        "properties": {
+          "detail": {
+            "items": {
+              "$ref": "#/components/schemas/ValidationError"
+            },
+            "type": "array",
+            "title": "Detail"
+          }
+        },
+        "type": "object",
+        "title": "HTTPValidationError"
+      },
+      "Harmonic": {
+        "properties": {
+          "enabled": {
+            "type": "boolean",
+            "title": "Enabled",
+            "default": true
+          },
+          "frequency_hz": {
+            "type": "number",
+            "maximum": 100000.0,
+            "exclusiveMinimum": 0.0,
+            "title": "Frequency Hz",
+            "default": 50.0
+          },
+          "amplitude_g": {
+            "type": "number",
+            "maximum": 10000.0,
+            "minimum": 0.0,
+            "title": "Amplitude G",
+            "default": 2.5
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "title": "Harmonic"
+      },
+      "HarmonicResult": {
+        "properties": {
+          "response": {
+            "$ref": "#/components/schemas/Response"
+          },
+          "connection_transmissibility": {
+            "type": "number",
+            "title": "Connection Transmissibility"
+          },
+          "sensor_transmissibility": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Sensor Transmissibility"
+          },
+          "phase_deg": {
+            "items": {
+              "type": "number"
+            },
+            "type": "array",
+            "title": "Phase Deg"
+          },
+          "spectrum": {
+            "items": {
+              "items": {
+                "type": "number"
+              },
+              "type": "array"
+            },
+            "type": "array",
+            "title": "Spectrum"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "response",
+          "connection_transmissibility",
+          "phase_deg",
+          "spectrum"
+        ],
+        "title": "HarmonicResult"
+      },
+      "JobRead": {
+        "properties": {
+          "id": {
+            "type": "string",
+            "title": "Id"
+          },
+          "snapshot_id": {
+            "type": "string",
+            "title": "Snapshot Id"
+          },
+          "stage": {
+            "type": "string",
+            "title": "Stage"
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "queued",
+              "running",
+              "completed",
+              "cancelled",
+              "failed"
+            ],
+            "title": "Status"
+          },
+          "result": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/AnalysisResult"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "error": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Error"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "id",
+          "snapshot_id",
+          "stage",
+          "status"
+        ],
+        "title": "JobRead"
+      },
+      "Limits": {
+        "properties": {
+          "harmonic_acceleration_g": {
+            "type": "number",
+            "maximum": 1000000000.0,
+            "exclusiveMinimum": 0.0,
+            "title": "Harmonic Acceleration G",
+            "default": 10.0
+          },
+          "harmonic_transmissibility": {
+            "type": "number",
+            "maximum": 1000000000.0,
+            "exclusiveMinimum": 0.0,
+            "title": "Harmonic Transmissibility",
+            "default": 0.2
+          },
+          "psd_acceleration_g_rms": {
+            "type": "number",
+            "maximum": 1000000000.0,
+            "exclusiveMinimum": 0.0,
+            "title": "Psd Acceleration G Rms",
+            "default": 3.0
+          },
+          "shock_acceleration_g": {
+            "type": "number",
+            "maximum": 1000000000.0,
+            "exclusiveMinimum": 0.0,
+            "title": "Shock Acceleration G",
+            "default": 10.0
+          },
+          "local_motion_mm": {
+            "type": "number",
+            "maximum": 1000000000.0,
+            "exclusiveMinimum": 0.0,
+            "title": "Local Motion Mm",
+            "default": 15.0
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "title": "Limits"
+      },
+      "MigrationResult": {
+        "properties": {
+          "project": {
+            "$ref": "#/components/schemas/Project"
+          },
+          "notices": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Notices"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "project"
+        ],
+        "title": "MigrationResult"
+      },
+      "Mode": {
+        "properties": {
+          "frequency_hz": {
+            "type": "number",
+            "title": "Frequency Hz"
+          },
+          "damping": {
+            "type": "number",
+            "title": "Damping"
+          },
+          "participation_percent": {
+            "type": "number",
+            "title": "Participation Percent"
+          },
+          "shape": {
+            "items": {
+              "type": "number"
+            },
+            "type": "array",
+            "title": "Shape"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "frequency_hz",
+          "damping",
+          "participation_percent",
+          "shape"
+        ],
+        "title": "Mode"
+      },
+      "Mount": {
+        "properties": {
+          "id": {
+            "type": "string",
+            "maxLength": 80,
+            "minLength": 1,
+            "title": "Id"
+          },
+          "position_mm": {
+            "items": {
+              "type": "number",
+              "maximum": 1000000000.0,
+              "minimum": -1000000000.0
+            },
+            "type": "array",
+            "maxItems": 3,
+            "minItems": 3,
+            "title": "Position Mm"
+          },
+          "angles_deg": {
+            "items": {
+              "type": "number",
+              "maximum": 1000000000.0,
+              "minimum": -1000000000.0
+            },
+            "type": "array",
+            "maxItems": 3,
+            "minItems": 3,
+            "title": "Angles Deg",
+            "default": [
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          "stiffness_n_mm": {
+            "items": {
+              "type": "number",
+              "maximum": 1000000000.0,
+              "exclusiveMinimum": 0.0
+            },
+            "type": "array",
+            "maxItems": 3,
+            "minItems": 3,
+            "title": "Stiffness N Mm",
+            "default": [
+              60.0,
+              60.0,
+              90.0
+            ]
+          },
+          "product_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Product Id"
+          },
+          "source": {
+            "type": "string",
+            "enum": [
+              "user",
+              "catalog",
+              "derived"
+            ],
+            "title": "Source",
+            "default": "user"
+          },
+          "estimate_accepted": {
+            "type": "boolean",
+            "title": "Estimate Accepted",
+            "default": false
+          },
+          "catalog_branch": {
+            "anyOf": [
+              {
+                "type": "string",
+                "enum": [
+                  "comp",
+                  "tens"
+                ]
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Catalog Branch"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "id",
+          "position_mm"
+        ],
+        "title": "Mount"
+      },
+      "Numerics": {
+        "properties": {
+          "rtol": {
+            "type": "number",
+            "maximum": 0.0001,
+            "minimum": 1e-10,
+            "title": "Rtol",
+            "default": 1e-07
+          },
+          "atol": {
+            "type": "number",
+            "maximum": 1e-06,
+            "minimum": 1e-12,
+            "title": "Atol",
+            "default": 1e-09
+          },
+          "psd_resolution": {
+            "type": "integer",
+            "maximum": 1200.0,
+            "minimum": 150.0,
+            "title": "Psd Resolution",
+            "default": 400
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "title": "Numerics"
+      },
+      "PSDPoint": {
+        "properties": {
+          "frequency_hz": {
+            "type": "number",
+            "maximum": 1000000000.0,
+            "exclusiveMinimum": 0.0,
+            "title": "Frequency Hz"
+          },
+          "density_g2_hz": {
+            "type": "number",
+            "maximum": 1000000000.0,
+            "exclusiveMinimum": 0.0,
+            "title": "Density G2 Hz"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "frequency_hz",
+          "density_g2_hz"
+        ],
+        "title": "PSDPoint"
+      },
+      "PSDResult": {
+        "properties": {
+          "input_g_rms": {
+            "type": "number",
+            "title": "Input G Rms"
+          },
+          "response": {
+            "$ref": "#/components/schemas/Response"
+          },
+          "sigma": {
+            "type": "number",
+            "title": "Sigma"
+          },
+          "spectrum": {
+            "items": {
+              "items": {
+                "type": "number"
+              },
+              "type": "array"
+            },
+            "type": "array",
+            "title": "Spectrum"
+          },
+          "integration_points": {
+            "type": "integer",
+            "title": "Integration Points"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "input_g_rms",
+          "response",
+          "sigma",
+          "spectrum",
+          "integration_points"
+        ],
+        "title": "PSDResult"
+      },
+      "Product": {
+        "properties": {
+          "id": {
+            "type": "string",
+            "title": "Id"
+          },
+          "name": {
+            "type": "string",
+            "title": "Name"
+          },
+          "series": {
+            "type": "string",
+            "title": "Series"
+          },
+          "family": {
+            "type": "string",
+            "enum": [
+              "lord",
+              "soc"
+            ],
+            "title": "Family"
+          },
+          "compound": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Compound"
+          },
+          "fn": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Fn"
+          },
+          "axial": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Axial"
+          },
+          "radial": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Radial"
+          },
+          "capacity": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Capacity"
+          },
+          "photo": {
+            "type": "string",
+            "title": "Photo"
+          },
+          "source": {
+            "type": "string",
+            "title": "Source"
+          },
+          "issue": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Issue"
+          },
+          "source_page": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Source Page"
+          },
+          "retrieved_at": {
+            "type": "string",
+            "title": "Retrieved At"
+          },
+          "directions": {
+            "anyOf": [
+              {
+                "additionalProperties": {
+                  "$ref": "#/components/schemas/DirectionData"
+                },
+                "type": "object"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Directions"
+          },
+          "height": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Height"
+          },
+          "width": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Width"
+          },
+          "mass": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Mass"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "id",
+          "name",
+          "series",
+          "family",
+          "photo",
+          "source",
+          "retrieved_at"
+        ],
+        "title": "Product"
+      },
+      "Project": {
+        "properties": {
+          "schema_version": {
+            "type": "string",
+            "const": "isolation-project-v5",
+            "title": "Schema Version",
+            "default": "isolation-project-v5"
+          },
+          "name": {
+            "type": "string",
+            "maxLength": 120,
+            "minLength": 1,
+            "title": "Name",
+            "default": "Yeni izolasyon projesi"
+          },
+          "system": {
+            "$ref": "#/components/schemas/System"
+          },
+          "structure": {
+            "$ref": "#/components/schemas/Structure"
+          },
+          "mounts": {
+            "items": {
+              "$ref": "#/components/schemas/Mount"
+            },
+            "type": "array",
+            "maxItems": 20,
+            "minItems": 2,
+            "title": "Mounts"
+          },
+          "direction": {
+            "items": {
+              "type": "number",
+              "maximum": 1000000000.0,
+              "minimum": -1000000000.0
+            },
+            "type": "array",
+            "maxItems": 3,
+            "minItems": 3,
+            "title": "Direction",
+            "default": [
+              0.0,
+              0.0,
+              1.0
+            ]
+          },
+          "harmonic": {
+            "$ref": "#/components/schemas/Harmonic"
+          },
+          "random": {
+            "$ref": "#/components/schemas/RandomLoad"
+          },
+          "shock": {
+            "$ref": "#/components/schemas/Shock"
+          },
+          "limits": {
+            "$ref": "#/components/schemas/Limits"
+          },
+          "numerics": {
+            "$ref": "#/components/schemas/Numerics"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "title": "Project"
+      },
+      "RandomLoad": {
+        "properties": {
+          "enabled": {
+            "type": "boolean",
+            "title": "Enabled",
+            "default": true
+          },
+          "points": {
+            "items": {
+              "$ref": "#/components/schemas/PSDPoint"
+            },
+            "type": "array",
+            "maxItems": 500,
+            "minItems": 2,
+            "title": "Points"
+          },
+          "sigma": {
+            "type": "number",
+            "maximum": 6.0,
+            "minimum": 1.0,
+            "title": "Sigma",
+            "default": 3.0
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "title": "RandomLoad"
+      },
+      "Response": {
+        "properties": {
+          "cg_g": {
+            "items": {
+              "type": "number"
+            },
+            "type": "array",
+            "title": "Cg G"
+          },
+          "connection_g": {
+            "items": {
+              "type": "number"
+            },
+            "type": "array",
+            "title": "Connection G"
+          },
+          "sensor_g": {
+            "anyOf": [
+              {
+                "items": {
+                  "type": "number"
+                },
+                "type": "array"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Sensor G"
+          },
+          "local_mm": {
+            "items": {
+              "items": {
+                "type": "number"
+              },
+              "type": "array"
+            },
+            "type": "array",
+            "title": "Local Mm"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "cg_g",
+          "connection_g",
+          "local_mm"
+        ],
+        "title": "Response"
+      },
+      "Shock": {
+        "properties": {
+          "enabled": {
+            "type": "boolean",
+            "title": "Enabled",
+            "default": true
+          },
+          "amplitude_g": {
+            "type": "number",
+            "maximum": 100000.0,
+            "minimum": 0.0,
+            "title": "Amplitude G",
+            "default": 20.0
+          },
+          "duration_ms": {
+            "type": "number",
+            "maximum": 10000.0,
+            "minimum": 0.01,
+            "title": "Duration Ms",
+            "default": 11.0
+          },
+          "shape": {
+            "type": "string",
+            "enum": [
+              "half",
+              "saw",
+              "triangle"
+            ],
+            "title": "Shape",
+            "default": "half"
+          },
+          "compensation_percent": {
+            "type": "integer",
+            "enum": [
+              0,
+              5,
+              10,
+              15,
+              20
+            ],
+            "title": "Compensation Percent",
+            "default": 0
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "title": "Shock"
+      },
+      "ShockMount": {
+        "properties": {
+          "mount_id": {
+            "type": "string",
+            "title": "Mount Id"
+          },
+          "nonlinear": {
+            "type": "boolean",
+            "title": "Nonlinear"
+          },
+          "angle_deg": {
+            "type": "number",
+            "title": "Angle Deg"
+          },
+          "reason": {
+            "type": "string",
+            "title": "Reason"
+          },
+          "compression_n_mm": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Compression N Mm"
+          },
+          "tension_n_mm": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Tension N Mm"
+          },
+          "preload_mm": {
+            "items": {
+              "type": "number"
+            },
+            "type": "array",
+            "title": "Preload Mm"
+          },
+          "total_min_mm": {
+            "items": {
+              "type": "number"
+            },
+            "type": "array",
+            "title": "Total Min Mm"
+          },
+          "total_max_mm": {
+            "items": {
+              "type": "number"
+            },
+            "type": "array",
+            "title": "Total Max Mm"
+          },
+          "projection_min_mm": {
+            "type": "number",
+            "title": "Projection Min Mm"
+          },
+          "projection_max_mm": {
+            "type": "number",
+            "title": "Projection Max Mm"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "mount_id",
+          "nonlinear",
+          "angle_deg",
+          "reason",
+          "preload_mm",
+          "total_min_mm",
+          "total_max_mm",
+          "projection_min_mm",
+          "projection_max_mm"
+        ],
+        "title": "ShockMount"
+      },
+      "ShockResult": {
+        "properties": {
+          "compensated": {
+            "$ref": "#/components/schemas/ShockRun"
+          },
+          "pure": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/ShockRun"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "velocity_window_m_s": {
+            "type": "number",
+            "title": "Velocity Window M S"
+          },
+          "nominal_velocity_m_s": {
+            "type": "number",
+            "title": "Nominal Velocity M S"
+          },
+          "velocity_ratio": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Velocity Ratio"
+          },
+          "scope": {
+            "type": "string",
+            "title": "Scope"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "compensated",
+          "velocity_window_m_s",
+          "nominal_velocity_m_s",
+          "scope"
+        ],
+        "title": "ShockResult"
+      },
+      "ShockRun": {
+        "properties": {
+          "response": {
+            "$ref": "#/components/schemas/Response"
+          },
+          "connection_relative_mm": {
+            "items": {
+              "type": "number"
+            },
+            "type": "array",
+            "title": "Connection Relative Mm"
+          },
+          "sensor_relative_mm": {
+            "anyOf": [
+              {
+                "items": {
+                  "type": "number"
+                },
+                "type": "array"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Sensor Relative Mm"
+          },
+          "mounts": {
+            "items": {
+              "$ref": "#/components/schemas/ShockMount"
+            },
+            "type": "array",
+            "title": "Mounts"
+          },
+          "samples": {
+            "items": {
+              "items": {
+                "type": "number"
+              },
+              "type": "array"
+            },
+            "type": "array",
+            "title": "Samples"
+          },
+          "end_ms": {
+            "type": "number",
+            "title": "End Ms"
+          },
+          "main_start_ms": {
+            "type": "number",
+            "title": "Main Start Ms"
+          },
+          "net_velocity_m_s": {
+            "type": "number",
+            "title": "Net Velocity M S"
+          },
+          "final_displacement_m": {
+            "type": "number",
+            "title": "Final Displacement M"
+          },
+          "accepted_steps": {
+            "type": "integer",
+            "title": "Accepted Steps"
+          },
+          "peak_evaluations": {
+            "type": "integer",
+            "title": "Peak Evaluations"
+          },
+          "tail_envelope": {
+            "type": "number",
+            "title": "Tail Envelope"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "response",
+          "connection_relative_mm",
+          "mounts",
+          "samples",
+          "end_ms",
+          "main_start_ms",
+          "net_velocity_m_s",
+          "final_displacement_m",
+          "accepted_steps",
+          "peak_evaluations",
+          "tail_envelope"
+        ],
+        "title": "ShockRun"
+      },
+      "StaticMount": {
+        "properties": {
+          "mount_id": {
+            "type": "string",
+            "title": "Mount Id"
+          },
+          "local_displacement_mm": {
+            "items": {
+              "type": "number"
+            },
+            "type": "array",
+            "title": "Local Displacement Mm"
+          },
+          "reaction_n": {
+            "items": {
+              "type": "number"
+            },
+            "type": "array",
+            "title": "Reaction N"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "mount_id",
+          "local_displacement_mm",
+          "reaction_n"
+        ],
+        "title": "StaticMount"
+      },
+      "StaticResult": {
+        "properties": {
+          "cg_displacement_mm": {
+            "items": {
+              "type": "number"
+            },
+            "type": "array",
+            "title": "Cg Displacement Mm"
+          },
+          "cg_rotation_mrad": {
+            "items": {
+              "type": "number"
+            },
+            "type": "array",
+            "title": "Cg Rotation Mrad"
+          },
+          "mounts": {
+            "items": {
+              "$ref": "#/components/schemas/StaticMount"
+            },
+            "type": "array",
+            "title": "Mounts"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "cg_displacement_mm",
+          "cg_rotation_mrad",
+          "mounts"
+        ],
+        "title": "StaticResult"
+      },
+      "Structure": {
+        "properties": {
+          "kind": {
+            "type": "string",
+            "enum": [
+              "rigid",
+              "flexible"
+            ],
+            "title": "Kind",
+            "default": "rigid"
+          },
+          "frequency_hz": {
+            "type": "number",
+            "maximum": 1000000000.0,
+            "exclusiveMinimum": 0.0,
+            "title": "Frequency Hz",
+            "default": 250.0
+          },
+          "damping": {
+            "type": "number",
+            "maximum": 1.0,
+            "minimum": 0.001,
+            "title": "Damping",
+            "default": 0.02
+          },
+          "mass_percent": {
+            "type": "number",
+            "maximum": 99.0,
+            "minimum": 0.01,
+            "title": "Mass Percent",
+            "default": 10.0
+          },
+          "automatic_connection": {
+            "type": "boolean",
+            "title": "Automatic Connection",
+            "default": true
+          },
+          "connection_mm": {
+            "items": {
+              "type": "number",
+              "maximum": 1000000000.0,
+              "minimum": -1000000000.0
+            },
+            "type": "array",
+            "maxItems": 3,
+            "minItems": 3,
+            "title": "Connection Mm",
+            "default": [
+              0.0,
+              0.0,
+              0.0
+            ]
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "title": "Structure"
+      },
+      "System": {
+        "properties": {
+          "mass_kg": {
+            "type": "number",
+            "maximum": 100000.0,
+            "exclusiveMinimum": 0.0,
+            "title": "Mass Kg",
+            "default": 40.0
+          },
+          "cg_mm": {
+            "items": {
+              "type": "number",
+              "maximum": 1000000000.0,
+              "minimum": -1000000000.0
+            },
+            "type": "array",
+            "maxItems": 3,
+            "minItems": 3,
+            "title": "Cg Mm",
+            "default": [
+              0.0,
+              0.0,
+              100.0
+            ]
+          },
+          "inertia_kg_m2": {
+            "items": {
+              "type": "number",
+              "maximum": 1000000000.0,
+              "exclusiveMinimum": 0.0
+            },
+            "type": "array",
+            "maxItems": 3,
+            "minItems": 3,
+            "title": "Inertia Kg M2",
+            "default": [
+              0.6,
+              1.0,
+              1.2
+            ]
+          },
+          "static_direction": {
+            "items": {
+              "type": "number",
+              "maximum": 1000000000.0,
+              "minimum": -1000000000.0
+            },
+            "type": "array",
+            "maxItems": 3,
+            "minItems": 3,
+            "title": "Static Direction",
+            "default": [
+              0.0,
+              0.0,
+              -1.0
+            ]
+          },
+          "extra_acceleration_g": {
+            "type": "number",
+            "maximum": 100.0,
+            "minimum": 0.0,
+            "title": "Extra Acceleration G",
+            "default": 0.0
+          },
+          "damping": {
+            "type": "number",
+            "maximum": 1.0,
+            "minimum": 0.002,
+            "title": "Damping",
+            "default": 0.125
+          },
+          "dynamic_static_ratio": {
+            "type": "number",
+            "maximum": 10.0,
+            "minimum": 0.1,
+            "title": "Dynamic Static Ratio",
+            "default": 1.4
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "title": "System"
+      },
+      "ValidationError": {
+        "properties": {
+          "loc": {
+            "items": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "integer"
+                }
+              ]
+            },
+            "type": "array",
+            "title": "Location"
+          },
+          "msg": {
+            "type": "string",
+            "title": "Message"
+          },
+          "type": {
+            "type": "string",
+            "title": "Error Type"
+          },
+          "input": {
+            "title": "Input"
+          },
+          "ctx": {
+            "type": "object",
+            "title": "Context"
+          }
+        },
+        "type": "object",
+        "required": [
+          "loc",
+          "msg",
+          "type"
+        ],
+        "title": "ValidationError"
+      }
+    }
+  }
+}

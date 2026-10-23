@@ -1,0 +1,849 @@
+[
+  {
+    "name": "rigid",
+    "project": {
+      "schema_version": "isolation-project-v5",
+      "name": "Yeni izolasyon projesi",
+      "system": {
+        "mass_kg": 40.0,
+        "cg_mm": [
+          0.0,
+          0.0,
+          100.0
+        ],
+        "inertia_kg_m2": [
+          0.6,
+          1.0,
+          1.2
+        ],
+        "static_direction": [
+          0.0,
+          0.0,
+          -1.0
+        ],
+        "extra_acceleration_g": 0.0,
+        "damping": 0.125,
+        "dynamic_static_ratio": 1.4
+      },
+      "structure": {
+        "kind": "rigid",
+        "frequency_hz": 250.0,
+        "damping": 0.02,
+        "mass_percent": 10.0,
+        "automatic_connection": true,
+        "connection_mm": [
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "mounts": [
+        {
+          "id": "I1",
+          "position_mm": [
+            -150.0,
+            -100.0,
+            0.0
+          ],
+          "angles_deg": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "stiffness_n_mm": [
+            60.0,
+            60.0,
+            90.0
+          ],
+          "product_id": null,
+          "source": "user",
+          "estimate_accepted": false,
+          "catalog_branch": null
+        },
+        {
+          "id": "I2",
+          "position_mm": [
+            150.0,
+            -100.0,
+            0.0
+          ],
+          "angles_deg": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "stiffness_n_mm": [
+            60.0,
+            60.0,
+            90.0
+          ],
+          "product_id": null,
+          "source": "user",
+          "estimate_accepted": false,
+          "catalog_branch": null
+        },
+        {
+          "id": "I3",
+          "position_mm": [
+            150.0,
+            100.0,
+            0.0
+          ],
+          "angles_deg": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "stiffness_n_mm": [
+            60.0,
+            60.0,
+            90.0
+          ],
+          "product_id": null,
+          "source": "user",
+          "estimate_accepted": false,
+          "catalog_branch": null
+        },
+        {
+          "id": "I4",
+          "position_mm": [
+            -150.0,
+            100.0,
+            0.0
+          ],
+          "angles_deg": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "stiffness_n_mm": [
+            60.0,
+            60.0,
+            90.0
+          ],
+          "product_id": null,
+          "source": "user",
+          "estimate_accepted": false,
+          "catalog_branch": null
+        }
+      ],
+      "direction": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "harmonic": {
+        "enabled": true,
+        "frequency_hz": 50.0,
+        "amplitude_g": 2.5
+      },
+      "random": {
+        "enabled": true,
+        "points": [
+          {
+            "frequency_hz": 5.0,
+            "density_g2_hz": 0.01
+          },
+          {
+            "frequency_hz": 20.0,
+            "density_g2_hz": 0.04
+          },
+          {
+            "frequency_hz": 200.0,
+            "density_g2_hz": 0.04
+          },
+          {
+            "frequency_hz": 500.0,
+            "density_g2_hz": 0.01
+          }
+        ],
+        "sigma": 3.0
+      },
+      "shock": {
+        "enabled": true,
+        "amplitude_g": 20.0,
+        "duration_ms": 11.0,
+        "shape": "half",
+        "compensation_percent": 0
+      },
+      "limits": {
+        "harmonic_acceleration_g": 10.0,
+        "harmonic_transmissibility": 0.2,
+        "psd_acceleration_g_rms": 3.0,
+        "shock_acceleration_g": 10.0,
+        "local_motion_mm": 15.0
+      },
+      "numerics": {
+        "rtol": 1e-07,
+        "atol": 1e-09,
+        "psd_resolution": 400
+      }
+    },
+    "legacy": {
+      "duration_ms": 274.399333,
+      "modes": [
+        8.282936680580741,
+        9.860374656365922,
+        12.831481731226479,
+        15.09876363134611,
+        17.90873792763577,
+        18.34877910147815
+      ],
+      "static": [
+        0,
+        0,
+        -0.0015254788888888887,
+        0,
+        0,
+        0
+      ],
+      "harmonic": {
+        "connection": [
+          0,
+          0,
+          0.3245383844847354
+        ],
+        "T": 0.12981535379389414,
+        "sensor": [
+          0,
+          0,
+          0.3245383844847354
+        ]
+      },
+      "psd": {
+        "connection": [
+          0,
+          0,
+          1.6583777042392818
+        ],
+        "sensor": [
+          0,
+          0,
+          1.6583777042392818
+        ],
+        "local": [
+          [
+            0,
+            0,
+            1.7440760494209773
+          ],
+          [
+            0,
+            0,
+            1.7440760494209773
+          ],
+          [
+            0,
+            0,
+            1.7440760494209773
+          ],
+          [
+            0,
+            0,
+            1.7440760494209773
+          ]
+        ]
+      },
+      "shock": {
+        "connection": [
+          0,
+          0,
+          11.138126414016773
+        ],
+        "local": [
+          [
+            0,
+            0,
+            11.759131371671135
+          ],
+          [
+            0,
+            0,
+            11.759131371671135
+          ],
+          [
+            0,
+            0,
+            11.759131371671135
+          ],
+          [
+            0,
+            0,
+            11.759131371671135
+          ]
+        ],
+        "sensor": [
+          0,
+          0,
+          11.138126414016773
+        ],
+        "steps": 22520
+      }
+    }
+  },
+  {
+    "name": "flexible-compensated",
+    "project": {
+      "schema_version": "isolation-project-v5",
+      "name": "Yeni izolasyon projesi",
+      "system": {
+        "mass_kg": 40.0,
+        "cg_mm": [
+          0.0,
+          0.0,
+          100.0
+        ],
+        "inertia_kg_m2": [
+          0.6,
+          1.0,
+          1.2
+        ],
+        "static_direction": [
+          0.0,
+          0.0,
+          -1.0
+        ],
+        "extra_acceleration_g": 0.0,
+        "damping": 0.125,
+        "dynamic_static_ratio": 1.4
+      },
+      "structure": {
+        "kind": "flexible",
+        "frequency_hz": 38.0,
+        "damping": 0.02,
+        "mass_percent": 10.0,
+        "automatic_connection": true,
+        "connection_mm": [
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "mounts": [
+        {
+          "id": "I1",
+          "position_mm": [
+            -150.0,
+            -100.0,
+            0.0
+          ],
+          "angles_deg": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "stiffness_n_mm": [
+            60.0,
+            60.0,
+            90.0
+          ],
+          "product_id": null,
+          "source": "user",
+          "estimate_accepted": false,
+          "catalog_branch": null
+        },
+        {
+          "id": "I2",
+          "position_mm": [
+            150.0,
+            -100.0,
+            0.0
+          ],
+          "angles_deg": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "stiffness_n_mm": [
+            60.0,
+            60.0,
+            90.0
+          ],
+          "product_id": null,
+          "source": "user",
+          "estimate_accepted": false,
+          "catalog_branch": null
+        },
+        {
+          "id": "I3",
+          "position_mm": [
+            150.0,
+            100.0,
+            0.0
+          ],
+          "angles_deg": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "stiffness_n_mm": [
+            60.0,
+            60.0,
+            90.0
+          ],
+          "product_id": null,
+          "source": "user",
+          "estimate_accepted": false,
+          "catalog_branch": null
+        },
+        {
+          "id": "I4",
+          "position_mm": [
+            -150.0,
+            100.0,
+            0.0
+          ],
+          "angles_deg": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "stiffness_n_mm": [
+            60.0,
+            60.0,
+            90.0
+          ],
+          "product_id": null,
+          "source": "user",
+          "estimate_accepted": false,
+          "catalog_branch": null
+        }
+      ],
+      "direction": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "harmonic": {
+        "enabled": true,
+        "frequency_hz": 50.0,
+        "amplitude_g": 2.5
+      },
+      "random": {
+        "enabled": true,
+        "points": [
+          {
+            "frequency_hz": 5.0,
+            "density_g2_hz": 0.01
+          },
+          {
+            "frequency_hz": 20.0,
+            "density_g2_hz": 0.04
+          },
+          {
+            "frequency_hz": 200.0,
+            "density_g2_hz": 0.04
+          },
+          {
+            "frequency_hz": 500.0,
+            "density_g2_hz": 0.01
+          }
+        ],
+        "sigma": 3.0
+      },
+      "shock": {
+        "enabled": true,
+        "amplitude_g": 20.0,
+        "duration_ms": 11.0,
+        "shape": "half",
+        "compensation_percent": 10
+      },
+      "limits": {
+        "harmonic_acceleration_g": 10.0,
+        "harmonic_transmissibility": 0.2,
+        "psd_acceleration_g_rms": 3.0,
+        "shock_acceleration_g": 10.0,
+        "local_motion_mm": 15.0
+      },
+      "numerics": {
+        "rtol": 1e-07,
+        "atol": 1e-09,
+        "psd_resolution": 400
+      }
+    },
+    "legacy": {
+      "duration_ms": 535.189875,
+      "modes": [
+        8.282936680580741,
+        9.860374656365922,
+        12.831481731226479,
+        14.962128045664018,
+        17.90873792763577,
+        18.34877910147815,
+        40.421307844940436
+      ],
+      "static": [
+        0,
+        0,
+        -0.0015254788888888887,
+        0,
+        0,
+        0
+      ],
+      "harmonic": {
+        "connection": [
+          0,
+          0,
+          0.43548797407231554
+        ],
+        "T": 0.17419518962892622,
+        "sensor": [
+          0,
+          0,
+          0.5947826407991886
+        ]
+      },
+      "psd": {
+        "connection": [
+          0,
+          0,
+          1.6373752637812047
+        ],
+        "sensor": [
+          0,
+          0,
+          2.352724334031047
+        ],
+        "local": [
+          [
+            0,
+            0,
+            1.7507922534859524
+          ],
+          [
+            0,
+            0,
+            1.7507922534859524
+          ],
+          [
+            0,
+            0,
+            1.7507922534859524
+          ],
+          [
+            0,
+            0,
+            1.7507922534859524
+          ]
+        ]
+      },
+      "shock": {
+        "connection": [
+          0,
+          0,
+          12.06304198583648
+        ],
+        "local": [
+          [
+            0,
+            0,
+            13.396946401824174
+          ],
+          [
+            0,
+            0,
+            13.396946401824174
+          ],
+          [
+            0,
+            0,
+            13.396946401824174
+          ],
+          [
+            0,
+            0,
+            13.396946401824174
+          ]
+        ],
+        "sensor": [
+          0,
+          0,
+          19.55373896916206
+        ],
+        "steps": 24120
+      }
+    }
+  },
+  {
+    "name": "socitec-directional",
+    "project": {
+      "schema_version": "isolation-project-v5",
+      "name": "Yeni izolasyon projesi",
+      "system": {
+        "mass_kg": 40.0,
+        "cg_mm": [
+          10.0,
+          -20.0,
+          80.0
+        ],
+        "inertia_kg_m2": [
+          0.6,
+          1.0,
+          1.2
+        ],
+        "static_direction": [
+          0.0,
+          0.0,
+          -1.0
+        ],
+        "extra_acceleration_g": 0.0,
+        "damping": 0.125,
+        "dynamic_static_ratio": 1.4
+      },
+      "structure": {
+        "kind": "rigid",
+        "frequency_hz": 250.0,
+        "damping": 0.02,
+        "mass_percent": 10.0,
+        "automatic_connection": true,
+        "connection_mm": [
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "mounts": [
+        {
+          "id": "I1",
+          "position_mm": [
+            -150.0,
+            -100.0,
+            0.0
+          ],
+          "angles_deg": [
+            0.0,
+            45.0,
+            0.0
+          ],
+          "stiffness_n_mm": [
+            8.38347495434979,
+            8.38347495434979,
+            101.52905469372641
+          ],
+          "product_id": "C6H-1010",
+          "source": "derived",
+          "estimate_accepted": true,
+          "catalog_branch": "comp"
+        },
+        {
+          "id": "I2",
+          "position_mm": [
+            150.0,
+            -100.0,
+            0.0
+          ],
+          "angles_deg": [
+            0.0,
+            45.0,
+            90.0
+          ],
+          "stiffness_n_mm": [
+            8.38347495434979,
+            8.38347495434979,
+            101.52905469372641
+          ],
+          "product_id": "C6H-1010",
+          "source": "derived",
+          "estimate_accepted": true,
+          "catalog_branch": "comp"
+        },
+        {
+          "id": "I3",
+          "position_mm": [
+            150.0,
+            100.0,
+            0.0
+          ],
+          "angles_deg": [
+            0.0,
+            45.0,
+            180.0
+          ],
+          "stiffness_n_mm": [
+            8.38347495434979,
+            8.38347495434979,
+            101.52905469372641
+          ],
+          "product_id": "C6H-1010",
+          "source": "derived",
+          "estimate_accepted": true,
+          "catalog_branch": "comp"
+        },
+        {
+          "id": "I4",
+          "position_mm": [
+            -150.0,
+            100.0,
+            0.0
+          ],
+          "angles_deg": [
+            0.0,
+            45.0,
+            270.0
+          ],
+          "stiffness_n_mm": [
+            8.38347495434979,
+            8.38347495434979,
+            101.52905469372641
+          ],
+          "product_id": "C6H-1010",
+          "source": "derived",
+          "estimate_accepted": true,
+          "catalog_branch": "comp"
+        }
+      ],
+      "direction": [
+        1.0,
+        0.0,
+        1.0
+      ],
+      "harmonic": {
+        "enabled": true,
+        "frequency_hz": 50.0,
+        "amplitude_g": 2.5
+      },
+      "random": {
+        "enabled": true,
+        "points": [
+          {
+            "frequency_hz": 5.0,
+            "density_g2_hz": 0.01
+          },
+          {
+            "frequency_hz": 20.0,
+            "density_g2_hz": 0.04
+          },
+          {
+            "frequency_hz": 200.0,
+            "density_g2_hz": 0.04
+          },
+          {
+            "frequency_hz": 500.0,
+            "density_g2_hz": 0.01
+          }
+        ],
+        "sigma": 3.0
+      },
+      "shock": {
+        "enabled": true,
+        "amplitude_g": 20.0,
+        "duration_ms": 11.0,
+        "shape": "half",
+        "compensation_percent": 5
+      },
+      "limits": {
+        "harmonic_acceleration_g": 10.0,
+        "harmonic_transmissibility": 0.2,
+        "psd_acceleration_g_rms": 3.0,
+        "shock_acceleration_g": 10.0,
+        "local_motion_mm": 15.0
+      },
+      "numerics": {
+        "rtol": 1e-07,
+        "atol": 1e-09,
+        "psd_resolution": 400
+      }
+    },
+    "legacy": {
+      "duration_ms": 3198.833584,
+      "modes": [
+        4.51255410455882,
+        4.917311932650567,
+        5.496049008469079,
+        10.448564673268988,
+        12.253268387482333,
+        14.539748222798064
+      ],
+      "static": [
+        0.0015905600887328667,
+        0.0005916423306496457,
+        -0.006526971879994956,
+        0.013257367934986703,
+        0.002946081763324778,
+        0.03525051099620461
+      ],
+      "harmonic": {
+        "connection": [
+          0.08029623226624176,
+          0.019335837754351912,
+          0.14699422791106564
+        ],
+        "T": 0.06399273174228627,
+        "sensor": [
+          0.08029623226624176,
+          0.019335837754351912,
+          0.14699422791106564
+        ]
+      },
+      "psd": {
+        "connection": [
+          0.5702750031246799,
+          0.2351938432649278,
+          0.656455228522295
+        ],
+        "sensor": [
+          0.5702750031246799,
+          0.2351938432649278,
+          0.656455228522295
+        ],
+        "local": [
+          [
+            0.8411586211950621,
+            1.8471857244114145,
+            1.8615400685657082
+          ],
+          [
+            1.0841196199190017,
+            1.4048357033594692,
+            1.1475086181925027
+          ],
+          [
+            2.6082854476157697,
+            0.8081431543549105,
+            1.1349152619381222
+          ],
+          [
+            2.4208098102640254,
+            2.0393062930626784,
+            1.1210156406757756
+          ]
+        ]
+      },
+      "shock": {
+        "connection": [
+          6.107252973115793,
+          2.3640492953010854,
+          5.157751252846647
+        ],
+        "local": [
+          [
+            11.287010469393612,
+            10.184058897895689,
+            20.119213745118483
+          ],
+          [
+            11.88588475633466,
+            15.862935528050972,
+            7.209416792490184
+          ],
+          [
+            23.15634342073883,
+            8.874733364215745,
+            8.841816536011727
+          ],
+          [
+            13.659975292435158,
+            21.19119820430207,
+            7.624035480909777
+          ]
+        ],
+        "sensor": [
+          6.107252973115793,
+          2.3640492953010854,
+          5.157751252846647
+        ],
+        "steps": 75304
+      }
+    }
+  }
+]
