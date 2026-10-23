@@ -46,12 +46,15 @@ Arayüz http://127.0.0.1:5173, API http://127.0.0.1:8000, OpenAPI http://127.0.0
 
 ## Kullanım
 
-1. **Sistem:** kütle/CG/asal atalet ve sürekli yükü girin. Rijit varsayılandır; esnek seçilince karşılıklı bağlı 7-DOF parametreleri açılır. ζ ve α kullanıcı kabulleridir.
+1. **Sistem:** kütle/CG/asal atalet ve sürekli yükü girin. İsteğe bağlı proje bilgilerine müşteri, ekipman, referans, revizyon, hazırlayan ve notları ekleyin. Rijit varsayılandır; esnek seçilince karşılıklı bağlı 7-DOF parametreleri açılır. ζ ve α kullanıcı kabulleridir.
 2. **İzolatör ve yerleşim:** aile/seri/ürün arayın. SOCITEC eşdeğer katılık tahminini açıkça kabul ederek uygulayın. 3B görünüş veya düğme/tablo ile izolatör seçin. Beş yerleşim, ortak roll ve CG Z doğrusuna yerel 2 hizalaması geri alınabilir.
 3. **Yükler ve isterler:** ortak tahrik vektörü, harmonik, PSD ve şok girdilerini düzenleyin. PSD metninde ayırıcıyı seçin. Ondalık virgül veya nokta desteklenir; belirsiz satır sessizce yorumlanmaz.
 4. **Hesapla:** gerçek aşamalar gösterilir; İptal yalnız çalışma sırasında etkindir. Girdi değişirse devam eden istek iptal edilir, eski sonuç “Güncel değil” olur. Eski istek yeni modele sonuç yazamaz.
 5. **Sonuçlar:** katalog/statik, harmonik, PSD ve şok ayrı durum taşır. İhlallerde değer, limit, birim ve nokta/eksen bulunur. Bilinmeyen kontrol genel olumlu karara çevrilmez.
-6. **Rapor:** yalnız seçili hesap snapshot'ını kullanır. Katalog revizyonu, hash'i ve kullanılan ürün kayıtları da hesap sonucuna sabitlenir. Taslak değişmişse eski snapshot uyarısı görünür. Yazdır/PDF ile A4 çıktı alın; tarayıcının yazdırma penceresindeki üst/alt URL başlıklarını kapatabilirsiniz. CSV düğmeleri ilgili tablolara/grafiklere aittir. JSON düğmesi her zaman güncel taslağı dışa aktarır.
+6. **Karşılaştırma:** sonuçtan en fazla dört sabit senaryo ekleyin. Kütle, ürün/yapı, analiz durumları, doğal frekanslar ve cevap özetleri yan yana gösterilir. Farklı dinamik yük/limit veya çözücü/katalog sürümleri bildirilir. Senaryo girdileri taslak olarak yeniden açılabilir; CSV özeti indirilebilir.
+7. **Rapor:** yalnız seçili hesap snapshot'ını kullanır. Katalog revizyonu, hash'i ve kullanılan ürün kayıtları da hesap sonucuna sabitlenir. Taslak değişmişse eski snapshot uyarısı görünür. Yazdır/PDF ile A4 çıktı alın; tarayıcının yazdırma penceresindeki üst/alt URL başlıklarını kapatabilirsiniz. CSV düğmeleri ilgili tablolara/grafiklere aittir. Üst çubuktaki JSON düğmesi geçerli güncel taslağı; rapordaki “Rapor girdisi JSON” yalnız hesap snapshot girdilerini dışa aktarır.
+
+**Rehber** düğmesinde beş aşamalı kullanım akışı ve aranabilir mühendislik terimleri bulunur. Sonuçların limit kullanım kartları yalnız sayısal limiti bilinen kontrolleri sıralar; veri eksikliği bu yüzdelerle giderilmiş sayılmaz.
 
 Şok grafikleri ortak zaman ekseninde yakınlaştırılır. **Tam kayıt / sıfırla** tüm sönüm kuyruğunu açar. Grafiğin görünüşü tepe kartlarını değiştirmez. Tüm süreyi kapsayan grafik kayıtları ile çözümün yoğun tepe araması farklı çözünürlüktedir; tepe araması azaltılmış grafik örneklerinden yapılmaz.
 
@@ -96,7 +99,7 @@ backend/isolator/
   solvers/    Bağımsız matris, harmonik, PSD, şok ve karar çekirdeği
   api/        FastAPI, sınırlı bellek kuyruğu, aşama, iptal, snapshot önbelleği
 frontend/src/
-  components/ Dört adım, talep üzerine 3B/ECharts, A4 rapor ve shadcn örüntüleri
+  components/ Beş adım, talep üzerine 3B/ECharts, A4 rapor ve shadcn örüntüleri
   generated/  OpenAPI'den üretilen TypeScript tipleri
   lib/        API, IndexedDB, sayı/PSD girdisi ve yalnız yerleşim geometrisi
 legacy-reference/  Salt referans amaçlı sabitlenmiş eski HTML + 12 JS ve manifest
@@ -119,3 +122,5 @@ Başlangıç envanteri: [IMPLEMENTATION.md](docs/IMPLEMENTATION.md). Bağımlıl
 Örnek A4 çıktı: [test senaryosu raporu](output/pdf/ornek-rapor.pdf) (40 kg, 20 g / 11 ms yarım sinüs, %10 kompanzasyon).
 
 Oracle üzerinde `ozankaya.net/izolator` yayını ve geri alma adımları: [sunucu kurulum notları](deploy/README.md).
+
+Uygulama güvenlik kontrolleri, giderilen bulgular ve sınırlar: [SECURITY.md](docs/SECURITY.md).

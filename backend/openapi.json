@@ -439,6 +439,7 @@
           },
           "product_id": {
             "type": "string",
+            "maxLength": 80,
             "title": "Product Id"
           },
           "mount_ids": {
@@ -446,6 +447,8 @@
               "type": "string"
             },
             "type": "array",
+            "maxItems": 20,
+            "minItems": 1,
             "title": "Mount Ids"
           },
           "estimate_accepted": {
@@ -1285,8 +1288,12 @@
             "type": "string",
             "maxLength": 120,
             "minLength": 1,
+            "pattern": "\\S",
             "title": "Name",
             "default": "Yeni izolasyon projesi"
+          },
+          "details": {
+            "$ref": "#/components/schemas/ProjectDetails"
           },
           "system": {
             "$ref": "#/components/schemas/System"
@@ -1338,6 +1345,49 @@
         "additionalProperties": false,
         "type": "object",
         "title": "Project"
+      },
+      "ProjectDetails": {
+        "properties": {
+          "customer": {
+            "type": "string",
+            "maxLength": 200,
+            "title": "Customer",
+            "default": ""
+          },
+          "equipment": {
+            "type": "string",
+            "maxLength": 200,
+            "title": "Equipment",
+            "default": ""
+          },
+          "reference": {
+            "type": "string",
+            "maxLength": 120,
+            "title": "Reference",
+            "default": ""
+          },
+          "revision": {
+            "type": "string",
+            "maxLength": 80,
+            "title": "Revision",
+            "default": ""
+          },
+          "prepared_by": {
+            "type": "string",
+            "maxLength": 200,
+            "title": "Prepared By",
+            "default": ""
+          },
+          "notes": {
+            "type": "string",
+            "maxLength": 4000,
+            "title": "Notes",
+            "default": ""
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "title": "ProjectDetails"
       },
       "RandomLoad": {
         "properties": {

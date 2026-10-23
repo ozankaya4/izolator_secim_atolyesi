@@ -1,4 +1,25 @@
 import type { Mount, Project } from './types';
+import { stable } from './types';
+type LayoutState = { mounts: Mount[]; system: Pick<Project['system'], 'cg_mm'> };
+export function undoLayout<T extends LayoutState>(current: T, before: T, after: T): T {
+  const changedCG = stable(before.system.cg_mm) !== stable(after.system.cg_mm);
+  if (
+    stable(current.mounts) !== stable(after.mounts) ||
+    (changedCG && stable(current.system.cg_mm) !== stable(after.system.cg_mm))
+  ) {
+    throw new Error(
+      'Yerleşim bu işlemden sonra değiştirildi. Güncel girdiler korundu; eski yerleşim işlemi geri alınmadı.',
+    );
+  }
+  return {
+    ...current,
+    mounts: structuredClone(before.mounts),
+    system: {
+      ...current.system,
+      cg_mm: changedCG ? [...before.system.cg_mm] : current.system.cg_mm,
+    },
+  };
+}
 export const presetNames = {
   base4: 'Dikdörtgen · 4',
   base6: 'Taban altıgen · 6',

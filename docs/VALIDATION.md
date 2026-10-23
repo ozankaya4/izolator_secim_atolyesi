@@ -47,9 +47,9 @@ Katalog verileri referanstan kayıpsız aktarılmıştır; üretici çalışma k
 
 ## Son doğrulama kaydı
 
-- 37 pytest geçti (fizik, yakınsama, 3 sabit legacy regresyonu, migrasyon ve API).
-- 5 Vitest geçti (yerel sayı/PSD ve form davranışı).
-- 7 Playwright akışı Docker/Nginx/FastAPI üzerinden geçti; aynı akışlar Vite üzerinde de geçti.
+- 47 pytest geçti (fizik, yakınsama, 3 sabit legacy regresyonu, migrasyon ve API).
+- 8 Vitest geçti (yerel sayı/PSD ve form davranışı).
+- 17 Playwright akışı kök/alt yol Docker/Nginx/FastAPI ve CI ortamlarında denetlenir. Proje bilgileri, rapor girdisi JSON, senaryo kalıcılığı/dört kayıt sınırı, farklı yük uyarısı, geçersiz girişin adım/rapor boyunca korunması, geri almanın diğer alanları koruması, asenkron içe aktarım yarışı ve rehber odağı kapsanır.
 - Strict TypeScript ve üretim derlemesi geçti; OpenAPI–TypeScript sözleşme eşleşmesi doğrulandı.
 - `docker compose up --build -d --wait` başarılı; `web` ve `api` healthy. Nginx üzerinden sağlık yanıtı ve 175 katalog kaydı doğrulandı.
 - A4 PDF, Poppler ile sayfalara render edilip gözle incelendi; Türkçe karakterler, tam grafik eksenleri ve sayfa numaraları doğrulandı. Örnek çıktı `output/pdf/ornek-rapor.pdf` içindedir.
@@ -57,3 +57,5 @@ Katalog verileri referanstan kayıpsız aktarılmıştır; üretici çalışma k
 Pytest çıktısında Starlette'in eski `httpx` test istemcisi için bir deprecation uyarısı bulunur; testler ve üretim API'si başarılıdır. Bu uyarı hesaplama çekirdeğiyle ilgili değildir.
 
 Snapshot kimliği normalize girdinin yanında çözücü sürümünü ve katalog SHA-256'sını içerir. Kullanılan katalog ürünlerinin kopyaları sonuç içinde saklanır; rapor kaynakları güncel katalogla sonradan birleştirilmez.
+
+23 Ekim geliştirme turunda Brave özel penceresinde gerçek arayüzle iki senaryo, Türkçe sayı girişi, rehber arama/Escape odağı ve eski snapshot raporu ayrıca kontrol edildi. Görsel kayıt: `comparison-brave.png`. Güvenlik regresyonları `backend/tests/test_security.py` içinde; kapsam `SECURITY.md` içindedir.

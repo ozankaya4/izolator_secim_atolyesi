@@ -22,6 +22,45 @@ export function SystemPanel({
         </div>
         <Move3D size={30} strokeWidth={1.3} />
       </div>
+      <details className="project-details">
+        <summary>
+          Proje ve rapor bilgileri <small>Müşteri, ekipman ve revizyon</small>
+        </summary>
+        <p className="hint">
+          İsteğe bağlıdır. Bu bilgiler JSON dosyanıza ve hesapladığınız rapor snapshot’ına eklenir.
+        </p>
+        <div className="field-grid three">
+          {(
+            [
+              ['customer', 'Müşteri / kuruluş', 200],
+              ['equipment', 'Makine / ekipman', 200],
+              ['reference', 'Proje referansı', 120],
+              ['revision', 'Revizyon', 80],
+              ['prepared_by', 'Hazırlayan', 200],
+            ] as const
+          ).map(([key, label, max]) => (
+            <label className="field" key={key}>
+              <span>{label}</span>
+              <input
+                value={p.details[key]}
+                maxLength={max}
+                onChange={(e) =>
+                  onChange({ ...p, details: { ...p.details, [key]: e.target.value } })
+                }
+              />
+            </label>
+          ))}
+        </div>
+        <label className="field">
+          <span>Proje notları / üreticiye sorulacaklar</span>
+          <textarea
+            value={p.details.notes}
+            maxLength={4000}
+            rows={3}
+            onChange={(e) => onChange({ ...p, details: { ...p.details, notes: e.target.value } })}
+          />
+        </label>
+      </details>
       <div className="system-layout">
         <div className="form-sheet">
           <section>

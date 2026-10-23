@@ -6,6 +6,7 @@ import { csv } from '../lib/storage';
 import { Button } from './ui/button';
 import { Tabs, TabsList, TabsTrigger, TabsContent } from './ui/tabs';
 import { Chart, baseChart } from './Chart';
+import { UtilizationPanel } from './UtilizationPanel';
 const groupNames = {
   static: 'Katalog / statik yük',
   harmonic: 'Harmonik',
@@ -374,7 +375,15 @@ export function ShockCharts({ result: r, print = false }: { result: Result; prin
     </>
   );
 }
-export function ResultsPanel({ result: r, stale }: { result: Result | null; stale: boolean }) {
+export function ResultsPanel({
+  result: r,
+  stale,
+  onCompare,
+}: {
+  result: Result | null;
+  stale: boolean;
+  onCompare?: () => void;
+}) {
   const [tab, setTab] = useState('modal');
   const [allIssues, setAllIssues] = useState(false);
   if (!r)
@@ -422,7 +431,14 @@ export function ResultsPanel({ result: r, stale }: { result: Result | null; stal
             {format(r.duration_seconds, 2)} sn
           </p>
         </div>
-        <Status status={r.overall} />
+        <div className="result-actions">
+          <Status status={r.overall} />
+          {onCompare && (
+            <Button variant="outline" disabled={stale} onClick={onCompare}>
+              Karşılaştırmaya ekle
+            </Button>
+          )}
+        </div>
       </div>
       {stale && (
         <div className="stale-banner" role="status">
@@ -498,6 +514,7 @@ export function ResultsPanel({ result: r, stale }: { result: Result | null; stal
           </button>
         ))}
       </div>
+      <UtilizationPanel result={r} />
       <div className="form-sheet results-details">
         <Tabs value={tab} onValueChange={setTab}>
           <TabsList>

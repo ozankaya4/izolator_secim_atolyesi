@@ -61,3 +61,9 @@ BASE_URL=https://ozankaya.net/izolator/ pnpm --dir frontend test:e2e
 Yayın öncesi/sonrası mevcut sitelerin HTTP durumları, Nginx yapılandırma hash'leri, eski konteyner kimlikleri ve servis başlangıçları karşılaştırılır. İlk kurulumun sonuçları `DEPLOYMENT.md` dosyasına kaydedilir.
 
 Resmî referanslar: [Vite public base path](https://vite.dev/guide/build#public-base-path), [Nginx proxy URI eşlemesi](https://nginx.org/en/docs/http/ngx_http_proxy_module.html#proxy_pass), [Certbot webroot ve yenileme](https://eff-certbot.readthedocs.io/en/stable/using.html).
+
+## Güvenlik ayarları
+
+HTTPS vhost kurulmadan önce `nginx-limits.conf`, `/etc/nginx/conf.d/izolator-limits.conf` olarak kurulmalıdır; `nginx-https.conf` bu HTTP bağlamındaki bölgeyi kullanır. Yalnız `/izolator/api/jobs` için IP başına 10 istek/dakika ve 6 istek ani yoğunluk payı uygulanır. Sonundaki `/` biçimi 308 ile aynı sınırlı adrese yönlenir. API/proje gövdesi en fazla 256 KiB. `nginx -t` başarılı olmadan reload yapılmaz.
+
+`runtime.compose.yaml` ve `compose.yaml` API'yi salt okunur dosya sistemi, tüm Linux yetkileri düşürülmüş ve ayrıcalık artışı kapalı olarak çalıştırır. Web salt okunurdur; Nginx geçici alanları boyut sınırlı tmpfs kullanır. Root'a ait `/etc/izolator/compose.yaml` değişiklikleri normal push ile kurulmaz; yönetici SSH oturumunda ayrıca doğrulanıp kurulmalıdır.

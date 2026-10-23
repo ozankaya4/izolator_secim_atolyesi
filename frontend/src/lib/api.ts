@@ -10,10 +10,34 @@ export async function request<T>(path: string, body?: unknown, signal?: AbortSig
     signal,
   });
   if (!response.ok) {
-    const err: unknown = await response.json().catch(() => ({ detail: response.statusText }));
+    const err: unknown = await response.json().catch(() => ({
+      detail:
+        response.status === 429
+          ? 'Çok sık istek gönderildi; birkaç saniye sonra yeniden deneyin.'
+          : response.status === 413
+            ? 'İstek en fazla 256 KiB olabilir.'
+            : response.statusText,
+    }));
+    const detail = typeof err === 'object' && err && 'detail' in err ? err.detail : null;
     throw new Error(
-      typeof err === 'object' && err && 'detail' in err
-        ? JSON.stringify(err.detail)
+      detail
+        ? typeof detail === 'string'
+          ? detail
+          : Array.isArray(detail)
+            ? detail
+                .map(
+                  (item: {
+                    field?: string;
+                    message?: string;
+                    loc?: (string | number)[];
+                    msg?: string;
+                  }) =>
+                    [item.field ?? item.loc?.join('.'), item.message ?? item.msg]
+                      .filter(Boolean)
+                      .join(': '),
+                )
+                .join('\n')
+            : JSON.stringify(detail)
         : 'API bağlantı hatası',
     );
   }

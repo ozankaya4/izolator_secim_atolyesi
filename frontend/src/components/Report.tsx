@@ -1,6 +1,7 @@
-import { FileText, Printer, X } from 'lucide-react';
+import { FileDown, FileText, Printer, X } from 'lucide-react';
 import type { Result } from '../lib/types';
 import { format } from '../lib/types';
+import { download } from '../lib/storage';
 import { Button } from './ui/button';
 import {
   CheckTable,
@@ -32,6 +33,13 @@ export default function Report({
           <X size={16} />
           Raporu kapat
         </Button>
+        <Button
+          variant="outline"
+          onClick={() => download('izolator-rapor-girdisi.json', JSON.stringify(p, null, 2))}
+        >
+          <FileDown size={16} />
+          Rapor girdisi JSON
+        </Button>
         <Button onClick={() => window.print()}>
           <Printer size={16} />
           Yazdır / PDF
@@ -57,6 +65,30 @@ export default function Report({
         )}
         <p className="hash">SHA-256: {r.snapshot_id}</p>
         <p className="hash">Katalog SHA-256: {r.catalog_sha256}</p>
+        {Object.values(p.details).some(Boolean) && (
+          <section>
+            <h2>Proje bilgileri</h2>
+            <dl className="report-metadata">
+              {(
+                [
+                  ['customer', 'Müşteri / kuruluş'],
+                  ['equipment', 'Makine / ekipman'],
+                  ['reference', 'Proje referansı'],
+                  ['revision', 'Revizyon'],
+                  ['prepared_by', 'Hazırlayan'],
+                ] as const
+              ).map(([key, label]) =>
+                p.details[key] ? (
+                  <div key={key}>
+                    <dt>{label}</dt>
+                    <dd>{p.details[key]}</dd>
+                  </div>
+                ) : null,
+              )}
+            </dl>
+            {p.details.notes && <p className="project-notes">{p.details.notes}</p>}
+          </section>
+        )}
         <section>
           <h2>Girdi özeti</h2>
           <table>
@@ -147,6 +179,76 @@ export default function Report({
           <p>
             Katalog catalog-v1 · revizyon {r.catalog_revision}. ζ/α üretici onayı olarak atanmaz.
           </p>
+        </section>
+        <section>
+          <h2>Yükler ve kabul sınırları</h2>
+          <table>
+            <thead>
+              <tr>
+                <th>Analiz</th>
+                <th>Girdi</th>
+                <th>İvme / geçirgenlik sınırı</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <th>Harmonik</th>
+                <td>
+                  {p.harmonic.enabled
+                    ? `${format(p.harmonic.frequency_hz)} Hz · ${format(p.harmonic.amplitude_g)} g tepe`
+                    : 'Kapalı'}
+                </td>
+                <td>
+                  {format(p.limits.harmonic_acceleration_g)} g tepe · T ≤{' '}
+                  {format(p.limits.harmonic_transmissibility)}
+                </td>
+              </tr>
+              <tr>
+                <th>Rastlantısal / PSD</th>
+                <td>
+                  {p.random.enabled
+                    ? `${p.random.points.length} frekans noktası · ${format(p.random.sigma)}σ`
+                    : 'Kapalı'}
+                </td>
+                <td>{format(p.limits.psd_acceleration_g_rms)} g RMS</td>
+              </tr>
+              <tr>
+                <th>Şok</th>
+                <td>
+                  {p.shock.enabled
+                    ? `${{ half: 'Yarım sinüs', saw: 'Terminal testere dişi', triangle: 'Simetrik üçgen' }[p.shock.shape]} · ${format(p.shock.amplitude_g)} g · ${format(p.shock.duration_ms)} ms · %${p.shock.compensation_percent} kompanzasyon`
+                    : 'Kapalı'}
+                </td>
+                <td>{format(p.limits.shock_acceleration_g)} g tepe</td>
+              </tr>
+              <tr>
+                <th>Yerel bağıl hareket</th>
+                <td>PSD için {format(p.random.sigma)}σ × RMS; harmonik/şok için dinamik tepe</td>
+                <td>{format(p.limits.local_motion_mm)} mm</td>
+              </tr>
+            </tbody>
+          </table>
+          {p.random.enabled && (
+            <details className="report-psd">
+              <summary>PSD girdi tablosu · Hz ve g²/Hz</summary>
+              <table>
+                <thead>
+                  <tr>
+                    <th>Frekans · Hz</th>
+                    <th>Yoğunluk · g²/Hz</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {p.random.points.map((point) => (
+                    <tr key={point.frequency_hz}>
+                      <td>{format(point.frequency_hz)}</td>
+                      <td>{format(point.density_g2_hz, 6)}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </details>
+          )}
         </section>
         <section>
           <h2>Modeller ve kabuller</h2>

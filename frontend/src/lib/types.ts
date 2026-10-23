@@ -13,7 +13,7 @@ export type Check = Complete<components['schemas']['Check']>;
 export type Response = Complete<components['schemas']['Response']>;
 export type Job = Complete<components['schemas']['JobRead']>;
 export type Migration = Complete<components['schemas']['MigrationResult']>;
-export type Step = 'system' | 'layout' | 'loads' | 'results';
+export type Step = 'system' | 'layout' | 'loads' | 'results' | 'compare';
 export const statusLabels = {
   within: 'Ön kontrol içinde',
   exceeded: 'Sınır aşıldı',

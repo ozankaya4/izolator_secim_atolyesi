@@ -3,6 +3,10 @@ name: izolator-prod
 services:
   api:
     image: izolator-api:${ISOLATOR_RELEASE:?}
+    read_only: true
+    cap_drop: [ALL]
+    security_opt: [no-new-privileges:true]
+    tmpfs: ["/tmp:rw,noexec,nosuid,size=32m"]
     init: true
     restart: unless-stopped
     cpus: 1.0
@@ -22,6 +26,13 @@ services:
       start_period: 10s
   web:
     image: izolator-web:${ISOLATOR_RELEASE:?}
+    read_only: true
+    cap_drop: [NET_RAW]
+    security_opt: [no-new-privileges:true]
+    tmpfs:
+      - /var/cache/nginx:rw,noexec,nosuid,size=16m
+      - /var/run:rw,noexec,nosuid,size=1m
+      - /tmp:rw,noexec,nosuid,size=8m
     init: true
     restart: unless-stopped
     cpus: 0.25

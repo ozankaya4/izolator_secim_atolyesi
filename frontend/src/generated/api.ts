@@ -507,6 +507,7 @@ export interface components {
              * @default Yeni izolasyon projesi
              */
             name: string;
+            details?: components["schemas"]["ProjectDetails"];
             system?: components["schemas"]["System"];
             structure?: components["schemas"]["Structure"];
             /** Mounts */
@@ -525,6 +526,39 @@ export interface components {
             shock?: components["schemas"]["Shock"];
             limits?: components["schemas"]["Limits"];
             numerics?: components["schemas"]["Numerics"];
+        };
+        /** ProjectDetails */
+        ProjectDetails: {
+            /**
+             * Customer
+             * @default
+             */
+            customer: string;
+            /**
+             * Equipment
+             * @default
+             */
+            equipment: string;
+            /**
+             * Reference
+             * @default
+             */
+            reference: string;
+            /**
+             * Revision
+             * @default
+             */
+            revision: string;
+            /**
+             * Prepared By
+             * @default
+             */
+            prepared_by: string;
+            /**
+             * Notes
+             * @default
+             */
+            notes: string;
         };
         /** RandomLoad */
         RandomLoad: {

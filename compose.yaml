@@ -4,6 +4,10 @@ services:
     build:
       context: .
       dockerfile: backend/Dockerfile
+    read_only: true
+    cap_drop: [ALL]
+    security_opt: [no-new-privileges:true]
+    tmpfs: ["/tmp:rw,noexec,nosuid,size=32m"]
     init: true
     restart: unless-stopped
     environment:
@@ -19,6 +23,13 @@ services:
     build:
       context: .
       dockerfile: frontend/Dockerfile
+    read_only: true
+    cap_drop: [NET_RAW]
+    security_opt: [no-new-privileges:true]
+    tmpfs:
+      - /var/cache/nginx:rw,noexec,nosuid,size=16m
+      - /var/run:rw,noexec,nosuid,size=1m
+      - /tmp:rw,noexec,nosuid,size=8m
     init: true
     restart: unless-stopped
     ports:

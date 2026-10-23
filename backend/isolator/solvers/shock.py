@@ -1,4 +1,5 @@
 from dataclasses import dataclass
+from itertools import pairwise
 
 import numpy as np
 from scipy.integrate import quad, solve_ivp
@@ -54,7 +55,7 @@ class Profile:
         )
         self.final_displacement = self.end * self.net_velocity - moment
         self.breaks = sorted(
-            set([0.0, self.pre, self.pre + tau / 2, self.main_end, self.end])
+            {0.0, self.pre, self.pre + tau / 2, self.main_end, self.end}
         )
 
     def pulse(self, t):
@@ -296,12 +297,12 @@ def solve_shock(model, percent, cancelled=lambda: False):
     state = np.zeros(2 * n)
     steps = evaluations = 0
     breaks = profile.breaks + [end]
-    for left, right in zip(breaks, breaks[1:]):
+    for left, right in pairwise(breaks):
         if right - left < 1e-14:
             continue
 
         # Left limit at discontinuous sawtooth terminal avoids blending pulse segments.
-        def rhs(t, y):
+        def rhs(t, y, left=left, right=right):
             return evaluate(np.nextafter(right, left) if t >= right else t, y)
 
         segment_step = (
@@ -345,7 +346,7 @@ def solve_shock(model, percent, cancelled=lambda: False):
                 )
                 if hi > lo:
 
-                    def objective(t):
+                    def objective(t, sign=sign, sol=sol, channel=channel):
                         return (
                             sign
                             * evaluate(np.array([t]), sol.sol(np.array([t])), True)[

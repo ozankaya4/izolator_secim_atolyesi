@@ -55,13 +55,13 @@ export function LoadsPanel({
         />
       </div>
       <div className="form-sheet">
-        <Tabs defaultValue="harmonic">
+        <Tabs defaultValue="harmonic" className="loads-tabs">
           <TabsList>
             <TabsTrigger value="harmonic">Harmonik</TabsTrigger>
             <TabsTrigger value="psd">Rastlantısal / PSD</TabsTrigger>
             <TabsTrigger value="shock">Şok</TabsTrigger>
           </TabsList>
-          <TabsContent value="harmonic">
+          <TabsContent forceMount value="harmonic">
             <section>
               <div className="section-title">
                 <h2>Sinüzoidal taban ivmesi</h2>
@@ -109,7 +109,7 @@ export function LoadsPanel({
               </p>
             </section>
           </TabsContent>
-          <TabsContent value="psd">
+          <TabsContent forceMount value="psd">
             <section>
               <div className="section-title">
                 <h2>Tek doğrultulu ortak taban PSD’si</h2>
@@ -278,7 +278,7 @@ export function LoadsPanel({
               </p>
             </section>
           </TabsContent>
-          <TabsContent value="shock">
+          <TabsContent forceMount value="shock">
             <section>
               <div className="section-title">
                 <h2>Klasik darbe ve kompanzasyon</h2>

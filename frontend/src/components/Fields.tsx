@@ -3,7 +3,11 @@ import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 import { parseNumber } from '../lib/numbers';
-export const ValidityContext = createContext<(id: string, invalid: boolean) => void>(() => {});
+import type { Step } from '../lib/types';
+export const FieldScopeContext = createContext<Step>('system');
+export const ValidityContext = createContext<(id: string, invalid: boolean, step?: Step) => void>(
+  () => {},
+);
 export function Numeric({
   label,
   unit,
@@ -25,6 +29,7 @@ export function Numeric({
 }) {
   const id = useId();
   const validity = useContext(ValidityContext);
+  const scope = useContext(FieldScopeContext);
   const [raw, setRaw] = useState(String(value));
   const schema = useMemo(
     () =>
@@ -62,9 +67,9 @@ export function Numeric({
     }
   }, [value]);
   useEffect(() => {
-    validity(id, !!message && !disabled);
-    return () => validity(id, false);
-  }, [id, message, disabled, validity]);
+    validity(id, !!message && !disabled, scope);
+    return () => validity(id, false, scope);
+  }, [id, message, disabled, validity, scope]);
   return (
     <label className={'field ' + (compact ? 'compact' : '')} htmlFor={id}>
       <span>

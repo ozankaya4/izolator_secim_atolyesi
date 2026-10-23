@@ -113,9 +113,21 @@ class Numerics(Model):
     psd_resolution: int = Field(default=400, ge=150, le=1200)
 
 
+class ProjectDetails(Model):
+    customer: str = Field(default="", max_length=200)
+    equipment: str = Field(default="", max_length=200)
+    reference: str = Field(default="", max_length=120)
+    revision: str = Field(default="", max_length=80)
+    prepared_by: str = Field(default="", max_length=200)
+    notes: str = Field(default="", max_length=4000)
+
+
 class Project(Model):
     schema_version: Literal["isolation-project-v5"] = "isolation-project-v5"
-    name: str = Field(default="Yeni izolasyon projesi", min_length=1, max_length=120)
+    name: str = Field(
+        default="Yeni izolasyon projesi", min_length=1, max_length=120, pattern=r"\S"
+    )
+    details: ProjectDetails = Field(default_factory=ProjectDetails)
     system: System = Field(default_factory=System)
     structure: Structure = Field(default_factory=Structure)
     mounts: list[Mount] = Field(
@@ -137,7 +149,7 @@ class Project(Model):
 
     @model_validator(mode="after")
     def unique_mounts_and_direction(self):
-        if len(set(m.id for m in self.mounts)) != len(self.mounts):
+        if len({m.id for m in self.mounts}) != len(self.mounts):
             raise ValueError("İzolatör kimlikleri benzersiz olmalı.")
         if np.linalg.norm(self.direction) < 1e-10:
             raise ValueError("Ortak tahrik yönü sıfır olamaz.")

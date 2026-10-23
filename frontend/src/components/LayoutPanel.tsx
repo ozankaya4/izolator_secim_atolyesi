@@ -3,7 +3,7 @@ import { ArrowUpRight, RotateCcw, Search, Plus, Table2, Box } from 'lucide-react
 import type { Catalog, Mount, Project } from '../lib/types';
 import { format } from '../lib/types';
 import { api } from '../lib/api';
-import { preset, presetNames, align, type Preset } from '../lib/layout';
+import { preset, presetNames, align, undoLayout, type Preset } from '../lib/layout';
 import { Numeric, Select, Toggle, VectorFields } from './Fields';
 import { Button } from './ui/button';
 import type { CameraView } from './Scene';
@@ -47,7 +47,7 @@ export function LayoutPanel({
   const [size, setSize] = useState(300);
   const [depth, setDepth] = useState(200);
   const [roll, setRoll] = useState(0);
-  const [undo, setUndo] = useState<Project | null>(null);
+  const [undo, setUndo] = useState<{ before: Project; after: Project } | null>(null);
   const [applying, setApplying] = useState(false);
   const selectedMount = p.mounts.find((m) => m.id === selected) ?? p.mounts[0];
   const products = catalog.products.filter(
@@ -61,7 +61,7 @@ export function LayoutPanel({
     onChange({ ...p, mounts: p.mounts.map((m) => (m.id === id ? { ...m, ...patch } : m)) });
   }
   function changeWithUndo(next: Project) {
-    setUndo(structuredClone(p));
+    setUndo({ before: structuredClone(p), after: structuredClone(next) });
     onChange(next);
   }
   async function apply(all: boolean) {
@@ -75,7 +75,7 @@ export function LayoutPanel({
         estimate_accepted: accepted,
       });
       if (onChange(next, p) === false) return;
-      setUndo(structuredClone(p));
+      setUndo({ before: structuredClone(p), after: structuredClone(next) });
       onNotice(
         `${product.name} ${all ? 'tüm izolatörlere' : selectedMount.id + ' izolatörüne'} uygulandı. ζ ve α kullanıcı değerlerinde.`,
       );
@@ -155,6 +155,7 @@ export function LayoutPanel({
         <div className="product-summary">
           <div className="product-picture">
             <img
+              key={product.photo}
               src={import.meta.env.BASE_URL + 'catalog-images/' + product.photo.split('/').at(-1)}
               alt={`${product.series} üretici aile görseli`}
               onError={(e) => {
@@ -330,7 +331,11 @@ export function LayoutPanel({
               variant="ghost"
               size="sm"
               onClick={() => {
-                onChange(undo);
+                try {
+                  onChange(undoLayout(p, undo.before, undo.after));
+                } catch (e) {
+                  onNotice((e as Error).message);
+                }
                 setUndo(null);
               }}
             >
